@@ -767,7 +767,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    589
+                    687
                 </div>
                 
 
@@ -856,7 +856,7 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
 </blockquote>
 <p>配置Git信息</p>
 <blockquote>
-<p>git config –global user.email “<a href="mailto:&#x79;&#111;&#x75;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#109;">&#x79;&#111;&#x75;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#109;</a>“<br>git config –global user.name “a4ua”</p>
+<p>git config –global user.email “<a href="mailto:&#121;&#x6f;&#x75;&#64;&#101;&#120;&#97;&#109;&#112;&#x6c;&#x65;&#46;&#99;&#111;&#109;">&#121;&#x6f;&#x75;&#64;&#101;&#120;&#97;&#109;&#112;&#x6c;&#x65;&#46;&#99;&#111;&#109;</a>“<br>git config –global user.name “a4ua”</p>
 </blockquote>
 <p>在Hexo的主配置文件中配置：</p>
 <pre><code>deploy:
@@ -866,12 +866,16 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
 <blockquote>
 <p>hexo  d</p>
 </blockquote>
-<h4 id="评论系统Valine"><a href="#评论系统Valine" class="headerlink" title="评论系统Valine"></a>评论系统Valine</h4><p>hexo-theme-matery主题自带了Valine评论系统，在主题配置文件中启用即可</p>
+<h4 id="评论系统Valine"><a href="#评论系统Valine" class="headerlink" title="评论系统Valine"></a>评论系统Valine</h4><p><code>hexo-theme-matery</code>主题自带了Valine评论系统，在主题配置文件中启用即可</p>
 <pre><code>valine:
   enable: true
   appId: 
   appKey: </code></pre>
 <p>appID和appKey需要去注册，<a target="_blank" rel="noopener" href="https://www.leancloud.cn/">注册连接</a>。</p>
+<h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>到Github上的博客仓库的<code>settings</code>，进入并找到<code>Custom Domain</code>，输入框填入自己的域名即可。</p>
+<img src="build-blog/image-20200922210232252.png" alt="image-20200922210232252" style="zoom: 67%;" />
+
+<p>然后在<code>source</code>目录下创建一个文件，名称为<code>CNAME</code>，文件无后缀。文件的内容写入域名，如：<code>a4ua.com</code>,作用是避免每次部署博客时，上一步在Github仓库设置的自定义域名会被重置。</p>
 <h4 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h4><p>启动本地Hexo服务器</p>
 <blockquote>
 <p>cd Myblog</p>
@@ -1503,7 +1507,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">589</span>&nbsp;字
+                class="white-color">687</span>&nbsp;字
             
             
             
