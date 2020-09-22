@@ -236,12 +236,26 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/categories/Geek/" class="waves-effect waves-light">
+    <a href="" class="waves-effect waves-light">
+
       
       <i class="fas fa-seedling" style="zoom: 0.6;"></i>
       
       <span>瞎折腾系列</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
     </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/">
+          
+          <i class="fas fa-magic" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>桌面美化</span>
+        </a>
+      </li>
+      
+    </ul>
     
   </li>
   
@@ -508,12 +522,26 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/categories/Geek/" class="waves-effect waves-light">
+		<a href="javascript:;">
 			
-			    <i class="fa-fw fas fa-seedling"></i>
+				<i class="fa-fw fas fa-seedling"></i>
 			
 			瞎折腾系列
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
 		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-magic" style="position: absolute;left:50px" ></i>
+			      
+		          <span>桌面美化</span>
+                  </a>
+                </li>
+              
+            </ul>
           
         </li>
         
@@ -732,14 +760,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-21
+                    2020-09-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    545
+                    589
                 </div>
                 
 
@@ -828,7 +856,7 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
 </blockquote>
 <p>配置Git信息</p>
 <blockquote>
-<p>git config –global user.email “<a href="mailto:&#x79;&#x6f;&#x75;&#64;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#111;&#109;">&#x79;&#x6f;&#x75;&#64;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#111;&#109;</a>“<br>git config –global user.name “a4ua”</p>
+<p>git config –global user.email “<a href="mailto:&#x79;&#111;&#x75;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#109;">&#x79;&#111;&#x75;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#109;</a>“<br>git config –global user.name “a4ua”</p>
 </blockquote>
 <p>在Hexo的主配置文件中配置：</p>
 <pre><code>deploy:
@@ -838,6 +866,12 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
 <blockquote>
 <p>hexo  d</p>
 </blockquote>
+<h4 id="评论系统Valine"><a href="#评论系统Valine" class="headerlink" title="评论系统Valine"></a>评论系统Valine</h4><p>hexo-theme-matery主题自带了Valine评论系统，在主题配置文件中启用即可</p>
+<pre><code>valine:
+  enable: true
+  appId: 
+  appKey: </code></pre>
+<p>appID和appKey需要去注册，<a target="_blank" rel="noopener" href="https://www.leancloud.cn/">注册连接</a>。</p>
 <h4 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h4><p>启动本地Hexo服务器</p>
 <blockquote>
 <p>cd Myblog</p>
@@ -1469,7 +1503,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">545</span>&nbsp;字
+                class="white-color">589</span>&nbsp;字
             
             
             
