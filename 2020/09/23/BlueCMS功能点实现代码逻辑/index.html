@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hexo + GitPage博客搭建, a4ua">
+    <meta name="keywords" content="BlueCMS功能点实现代码逻辑, a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hexo + GitPage博客搭建 | a4ua</title>
+    <title>BlueCMS功能点实现代码逻辑 | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -606,12 +606,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hexo + GitPage博客搭建</h1>
+                    <h1 class="description center-align post-title">BlueCMS功能点实现代码逻辑</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/Hexo/">
-                                <span class="chip bg-color">Hexo</span>
+                            <a href="/tagsio/BlueCMS/">
+                                <span class="chip bg-color">BlueCMS</span>
                             </a>
                         
                     </div>
@@ -740,8 +740,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                教程
+                            <a href="/categories/PHP/" class="post-category">
+                                PHP
                             </a>
                         
                     </div>
@@ -753,21 +753,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2020-09-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-10-12
+                    2020-09-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    763
+                    281
                 </div>
                 
 
@@ -784,131 +784,42 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="前备环境"><a href="#前备环境" class="headerlink" title="前备环境"></a>前备环境</h4><ul>
-<li>Git</li>
-<li>Node.js</li>
-</ul>
-<h4 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h4><blockquote>
-<p><code>npm install -g hexo-cli</code></p>
-</blockquote>
-<h4 id="初始化Blog"><a href="#初始化Blog" class="headerlink" title="初始化Blog"></a>初始化Blog</h4><blockquote>
-<p><code>hexo init  Myblog</code>       #会在当前目录下生成Myblog目录，即博客目录。</p>
-</blockquote>
-<h4 id="安装依赖模块"><a href="#安装依赖模块" class="headerlink" title="安装依赖模块"></a>安装依赖模块</h4><blockquote>
-<p><code>cd Myblog</code></p>
-<p><code>npm install</code>     #根据Myblog目录下的package.json安装所需的模块。如hexo-server等。</p>
-</blockquote>
-<p>目录、文件结构说明：</p>
-<blockquote>
-<p>Myblog</p>
-<p>​        I— node_modules            # 存放模块的目录。</p>
-<p>​        |— scaffolds                       # 文章、页面模板。</p>
-<p>​        |— source                           # 存放文章的目录。</p>
-<p>​        |— themes                          # 存放Hexo主题的目录。</p>
-<p>​        |— .gitignore                      </p>
-<p>​        |— _config.yml                   #Hexo主配置文件，如网站Title、主题等配置。</p>
-<p>​        |— package.json                #依赖说明文件。</p>
-<p>​        |__ package-lock.json</p>
-</blockquote>
-<h4 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h4><p>主题在Hexo主配置文件<code> _config.yml</code>中的<code>theme</code>配置项中设置。</p>
-<blockquote>
-<p><code>cd Myblog/themes/</code></p>
-<p>git clone <a href="https://github.com/blinkfox/hexo-theme-matery.git" target="_blank" rel="noopener">https://github.com/blinkfox/hexo-theme-matery.git</a></p>
-</blockquote>
-<h4 id="额外插件"><a href="#额外插件" class="headerlink" title="额外插件"></a>额外插件</h4><p><strong>a.代码高亮</strong></p>
-<blockquote>
-<p><code>npm i -S hexo-prism-plugin</code></p>
-</blockquote>
-<p>修改Hexo主配置文件<code> _config.yml</code>：</p>
-<pre><code>highlight:     #关闭hexo自带的代码高亮
-  enable: false
+                <h2 id="新闻列表"><a href="#新闻列表" class="headerlink" title="新闻列表"></a>新闻列表</h2><p>如下图，首页上的新闻列表。</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923095406406.png" alt="image-20200923095406406" style="zoom:50%;">
 
-prism_plugin:    #新增这部分配置以启用prism高亮插件。
-  mode: &#39;preprocess&#39;    # realtime/preprocess
-  theme: &#39;tomorrow&#39;
-  line_number: false    # default false
-  custom_css:</code></pre>
-<p><strong>b.字数统计</strong></p>
+<p><strong>实现逻辑</strong></p>
 <blockquote>
-<p><code>npm i --save hexo-wordcount</code></p>
+<p>从存放新闻的数据库表中获取数据，上图不同的框注的部分实际只是在进行SQL查询时，语句过滤的条件不同而已。之后将查询到的所有新闻数据传给模板语言，模板语言循环传入的数据并渲染显示内容（文章URL、文章标题）。</p>
 </blockquote>
-<p>在主题的配置文件<code> _config.yml</code>中启用字数统计：</p>
-<pre><code>postInfo:
-  wordCount: true      # 文章字数统计
-  totalCount: true      # 站点总文章字数</code></pre>
-<p><strong>c.搜索插件</strong></p>
-<blockquote>
-<p><code>npm install hexo-generator-search --save</code></p>
-</blockquote>
-<p>在Hexo的主配置文件<code> _config.yml</code>中新增以下内容：</p>
-<pre><code>search:
-  path: search.xml
-  field: post</code></pre>
-<h4 id="新增分类、关于我等页面"><a href="#新增分类、关于我等页面" class="headerlink" title="新增分类、关于我等页面"></a>新增分类、关于我等页面</h4><p>具体页面配置，见<a href="https://github.com/blinkfox/hexo-theme-matery/blob/develop/README_CN.md" target="_blank" rel="noopener">主题说明</a>。</p>
-<blockquote>
-<p>hexo new page “categories”</p>
-<p>hexo new page “tags”</p>
-<p>hexo new page “about”</p>
-</blockquote>
-<h4 id="部署到GitPages"><a href="#部署到GitPages" class="headerlink" title="部署到GitPages"></a>部署到GitPages</h4><p>安装将博客到部署到Git的插件</p>
-<blockquote>
-<p>npm install hexo-deployer-git –save</p>
-</blockquote>
-<p>配置Git信息</p>
-<blockquote>
-<p>git config –global user.email “<a href="mailto:&#x79;&#111;&#117;&#x40;&#101;&#x78;&#97;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#111;&#x6d;">&#x79;&#111;&#117;&#x40;&#101;&#x78;&#97;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#111;&#x6d;</a>“<br>git config –global user.name “a4ua”</p>
-</blockquote>
-<p>在Hexo的主配置文件中配置：</p>
-<pre><code>deploy:
-  type: &#39;git&#39;
-  repo:  https://github.com/a4ua/a4ua.github.io</code></pre>
-<p>部署命令</p>
-<blockquote>
-<p>hexo  d</p>
-</blockquote>
-<h4 id="评论系统Valine"><a href="#评论系统Valine" class="headerlink" title="评论系统Valine"></a>评论系统Valine</h4><p><code>hexo-theme-matery</code>主题自带了Valine评论系统，在主题配置文件中启用即可</p>
-<pre><code>valine:
-  enable: true
-  appId: 
-  appKey: </code></pre>
-<p>appID和appKey需要去注册，<a href="https://www.leancloud.cn/" target="_blank" rel="noopener">注册连接</a>。</p>
-<p>注册账户登录后创建应用，在设置=&gt;应用Keys即可看到。</p>
-<img src="/2020/09/20/build-blog/image-20200922222556328.png" alt="image-20200922222556328" style="zoom:67%;">
+<p>每篇文章一般会使用不同的<code>id</code>参数标识。形如：<code>news.php?id=1</code></p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923105348921.png" alt="image-20200923105348921" style="zoom:50%;">
 
-<p>评论在存储=&gt;Comment处管理。</p>
-<img src="/2020/09/20/build-blog/image-20200922222831657.png" alt="image-20200922222831657" style="zoom:67%;">
+<p>存放新闻的数据表:</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100515760.png" alt="image-20200923100515760" style="zoom: 40%;">
 
-<h4 id="自定义域名"><a href="#自定义域名" class="headerlink" title="自定义域名"></a>自定义域名</h4><p>到Github上的博客仓库的<code>settings</code>，进入并找到<code>Custom Domain</code>，输入框填入自己的域名即可。</p>
-<img src="/2020/09/20/build-blog/image-20200922210232252.png" alt="image-20200922210232252" style="zoom:67%;">
+<p>查询数据并传给模板语言：</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100758860.png" alt="image-20200923100758860" style="zoom:50%;">
 
-<p>然后在<code>source</code>目录下创建一个文件，名称为<code>CNAME</code>，文件无后缀。文件的内容写入域名，如：<code>a4ua.com</code>,作用是避免每次部署博客时，上一步在Github仓库设置的自定义域名会被重置。</p>
-<h4 id="Hexo文章本地图片"><a href="#Hexo文章本地图片" class="headerlink" title="Hexo文章本地图片"></a>Hexo文章本地图片</h4><p>参考连接：</p>
-<p><a href="https://www.jianshu.com/p/f72aaad7b852" target="_blank" rel="noopener">https://www.jianshu.com/p/f72aaad7b852</a></p>
-<h4 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h4><p>启动本地Hexo服务器</p>
-<blockquote>
-<p>cd Myblog</p>
-<p>hexo  s     #服务器默认监听在<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000</a></p>
-</blockquote>
-<p>创建新的文章</p>
-<blockquote>
-<p>hexo new  “title”    #根据scaffolds\post.md模板生成文章。</p>
-</blockquote>
-<p>渲染</p>
-<blockquote>
-<p>hexo g        #渲染会生成一个public文件夹，里面存放渲染好的博客文件。</p>
-</blockquote>
-<p>部署</p>
-<blockquote>
-<p>hexo d     #将博客部署到GitPage，实质是上传public文件夹到github对应仓库。</p>
-</blockquote>
-<p>清理缓存</p>
-<blockquote>
-<p>hexo clean</p>
-</blockquote>
-<h4 id="解决代码中-乱码问题"><a href="#解决代码中-乱码问题" class="headerlink" title="解决代码中{}乱码问题"></a>解决代码中<code>{}</code>乱码问题</h4><blockquote>
-<p>npm i <a href="mailto:&#x68;&#101;&#x78;&#111;&#64;&#x34;&#46;&#49;&#46;&#x31;">&#x68;&#101;&#x78;&#111;&#64;&#x34;&#46;&#49;&#46;&#x31;</a>    #安装低版本hexo</p>
-</blockquote>
+<p>模板循环数据进行渲染：</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923101019763.png" alt="image-20200923101019763" style="zoom: 50%;">
 
+<h5 id="文章分类页"><a href="#文章分类页" class="headerlink" title="文章分类页"></a><strong>文章分类页</strong></h5><p>文章分类页同理，只不过是根据文章表的<code>cid</code>字段，即分类字段进行过滤查询结果。</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923111410133.png" alt="image-20200923111410133" style="zoom:40%;">
+
+<h2 id="导航条"><a href="#导航条" class="headerlink" title="导航条"></a>导航条</h2><img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923112411381.png" alt="image-20200923112411381" style="zoom:50%;">
+
+<p><strong>实现逻辑</strong></p>
+<blockquote>
+<p>将导航条各个菜单项的信息存储到数据库的一个表中，在显示页面时将其从数据库中读出传给模板引擎进行渲染。</p>
+</blockquote>
+<p>存放菜单项的数据表：</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923113839727.png" alt="image-20200923113839727" style="zoom:50%;">
+
+<p>从数据库中查询：</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="img" style="zoom:40%;">
+
+<p>传到页面进行渲染显示：</p>
+<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="Untitled.png (1699×376)" style="zoom:40%;">
             </div>
             <hr/>
 
@@ -933,7 +844,7 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/09/20/build-blog/">http://a4ua.github.io/2020/09/20/build-blog/</a>
+                    <a href="http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/">http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -971,8 +882,8 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
+                                <a href="/tagsio/BlueCMS/">
+                                    <span class="chip bg-color">BlueCMS</span>
                                 </a>
                             
                         </div>
@@ -1278,6 +1189,55 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2020/10/12/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%AE%B9%E5%99%A8%EF%BC%88%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87%E3%80%81%E6%98%A0%E5%B0%84%EF%BC%89/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Golang学习之路—容器（数组、切片、映射）">
+                        
+                        <span class="card-title">Golang学习之路—容器（数组、切片、映射）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2020/09/22/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98%E2%80%94BlueCMS/">
                     <div class="card-image">
                         
@@ -1294,9 +1254,9 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1318,56 +1278,6 @@ prism_plugin:    #新增这部分配置以启用prism高亮插件。
                     
                     <a href="/tagsio/BlueCMS/">
                         <span class="chip bg-color">BlueCMS</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/09/20/build-blog/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Hexo + GitPage博客搭建">
-                        
-                        <span class="card-title">Hexo + GitPage博客搭建</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                    教程
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tagsio/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
                     </a>
                     
                 </div>
