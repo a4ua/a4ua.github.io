@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BlueCMS功能点实现代码逻辑, a4ua">
+    <meta name="keywords" content="Golang学习之路—结构体, a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>BlueCMS功能点实现代码逻辑 | a4ua</title>
+    <title>Golang学习之路—结构体 | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -611,7 +611,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">BlueCMS功能点实现代码逻辑</h1>
+                    <h1 class="description center-align post-title">Golang学习之路—结构体</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/BlueCMS/">
-                                <span class="chip bg-color">BlueCMS</span>
+                            <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                <span class="chip bg-color">Go基础知识</span>
                             </a>
                         
                     </div>
@@ -740,8 +740,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/PHP/" class="post-category">
-                                PHP
+                            <a href="/categories/Golang/" class="post-category">
+                                Golang
                             </a>
                         
                     </div>
@@ -753,21 +753,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    281
+                    1.6k
                 </div>
                 
 
@@ -784,42 +784,329 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="新闻列表"><a href="#新闻列表" class="headerlink" title="新闻列表"></a>新闻列表</h2><p>如下图，首页上的新闻列表。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923095406406.png" alt="image-20200923095406406" style="zoom:50%;">
+                <h2 id="一、自定义类型与类型别名"><a href="#一、自定义类型与类型别名" class="headerlink" title="一、自定义类型与类型别名"></a>一、自定义类型与类型别名</h2><ul>
+<li><p>类型别名在编译时会被替换为原类型。</p>
+</li>
+<li><p>自定义类型在编译时会保留。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">type</span> newInt <span class="token builtin">int</span>  <span class="token comment" spellcheck="true">//自定义类型，新的类型</span>
+    <span class="token keyword">type</span> myInt <span class="token operator">=</span> <span class="token builtin">int</span> <span class="token comment" spellcheck="true">//类型别名</span>
 
-<p><strong>实现逻辑</strong></p>
+    <span class="token keyword">var</span> m newInt <span class="token operator">=</span> <span class="token number">100</span>
+    <span class="token keyword">var</span> n myInt <span class="token operator">=</span> <span class="token number">100</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T\n"</span><span class="token punctuation">,</span> m<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//main.newInt</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T\n"</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//int</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+<h2 id="二、结构体（Struct）"><a href="#二、结构体（Struct）" class="headerlink" title="二、结构体（Struct）"></a>二、结构体（Struct）</h2><ul>
+<li>Go语言的结构体与其他语言的类有同样地位，但是Go的结构体没有继承等面向对象特性。</li>
+<li>结构体是一块连续的地址空间，封装一个或多个基本数据类型，实现复合类型。</li>
+<li>结构体是一种自定义数据类型，特别：<strong>每个结构体都是一种自定义的类型</strong>。</li>
+<li>结构体是<strong>值类型</strong>。</li>
+</ul>
+<h5 id="0x00-结构体定义与实例化"><a href="#0x00-结构体定义与实例化" class="headerlink" title="0x00 结构体定义与实例化"></a>0x00 结构体定义与实例化</h5><ul>
+<li><p><strong>结构体的定义只是内存布局的描述，只有当实例化结构体或初始化结构体时，才真正分配内存。</strong></p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">//语法格式</span>
+<span class="token keyword">type</span> 结构体名 <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    字段名<span class="token number">1</span> 类型
+    字段名<span class="token number">2</span> 类型
+    字段名<span class="token number">3</span> 类型
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//例子</span>
+<span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name  <span class="token builtin">string</span>
+    age   <span class="token builtin">int</span>
+    hobby <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+<li><p><strong>实例化结构体</strong></p>
+<ul>
+<li><p>其一：使用<code>var</code>关键字，会自动用0值进行初始化。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">var</span> aqua Person
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> aqua<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//{  0 []}</span></code></pre>
+</li>
+<li><p>其二：使用<code>new</code>函数，返回结构体指针。</p>
+<pre class=" language-go"><code class="language-go">aqua <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>Person<span class="token punctuation">)</span>
+
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> aqua<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//&amp;{ 0 []}</span>
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>aqua<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//{ 0 []}</span></code></pre>
+</li>
+<li><p>其三：在 Go语言中，对结构体进行<code>&amp;</code>取地址操作时，视为对该类型进行一次 <code>new</code> 的实例化操作。</p>
+<pre class=" language-go"><code class="language-go">aqua <span class="token operator">:=</span> <span class="token operator">&amp;</span>Person<span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> aqua<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//&amp;{ 0 []}</span>
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>aqua<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{ 0 []}</span></code></pre>
+</li>
+<li><p>结构体构造函数：约定成俗以 <code>new+结构体名</code> 为构造函数名。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name <span class="token builtin">string</span>
+    age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 尽量返回指针而不是结构体本身以减少拷贝（结构体是值类型）节约内存资源。</span>
+<span class="token keyword">func</span> <span class="token function">newPerson</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">,</span> age <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">*</span>Person <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">&amp;</span>Person<span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span> name<span class="token punctuation">,</span>
+        age<span class="token punctuation">:</span>  age<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p1 <span class="token operator">:=</span> <span class="token function">newPerson</span><span class="token punctuation">(</span><span class="token string">"Mikasa"</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">)</span>
+    p2 <span class="token operator">:=</span> <span class="token function">newPerson</span><span class="token punctuation">(</span><span class="token string">"Aqua"</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{Mikasa 17}</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{Aqua 1000}</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>结构体属性初始化</strong></p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">//第一种</span>
+<span class="token keyword">var</span> p1 Person
+p1<span class="token punctuation">.</span>Name <span class="token operator">=</span> <span class="token string">"Yuigahama"</span>
+p1<span class="token punctuation">.</span>Age <span class="token operator">=</span> <span class="token number">17</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">,</span> p1<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> p1<span class="token punctuation">.</span>Age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{Yuigahama 17} Yuigahama 17</span>
+
+<span class="token comment" spellcheck="true">//第二种：声明并初始化</span>
+p2 <span class="token operator">:=</span> Person<span class="token punctuation">{</span>
+    Name<span class="token punctuation">:</span> <span class="token string">"Mikasa"</span><span class="token punctuation">,</span>
+    Age<span class="token punctuation">:</span>  <span class="token number">16</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p2<span class="token punctuation">,</span> p2<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> p2<span class="token punctuation">.</span>Age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{Mikasa 16} Mikasa 16</span>
+
+<span class="token comment" spellcheck="true">//第三种：new</span>
+p3 <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>Person<span class="token punctuation">)</span>
+p3<span class="token punctuation">.</span>Name <span class="token operator">=</span> <span class="token string">"Tosaki"</span>
+p3<span class="token punctuation">.</span>Age <span class="token operator">=</span> <span class="token number">18</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p3<span class="token punctuation">,</span> p3<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> p3<span class="token punctuation">.</span>Age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{Tosaki 18} Tosaki 18</span>
+
+<span class="token comment" spellcheck="true">// 第四种</span>
+p4 <span class="token operator">:=</span> <span class="token operator">&amp;</span>Person<span class="token punctuation">{</span>
+    <span class="token string">"Toka"</span><span class="token punctuation">,</span>
+    <span class="token number">17</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p4<span class="token punctuation">,</span> p4<span class="token punctuation">.</span>Name<span class="token punctuation">,</span> p4<span class="token punctuation">.</span>Age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{Toka 17} Toka 17</span></code></pre>
+</li>
+</ul>
+<h5 id="0x01-匿名结构体"><a href="#0x01-匿名结构体" class="headerlink" title="0x01 匿名结构体"></a>0x01 匿名结构体</h5><ul>
+<li><p>匿名结构体常用于结构体只需要单实例时。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    waife <span class="token operator">:=</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+        name <span class="token builtin">string</span>
+        age  <span class="token builtin">int</span>
+    <span class="token punctuation">}</span><span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span> <span class="token string">"Tosaki"</span><span class="token punctuation">,</span>
+        age<span class="token punctuation">:</span>  <span class="token number">17</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> waife<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{Tosaki 17}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> waife <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+        name <span class="token builtin">string</span>
+        age  <span class="token builtin">int</span>
+    <span class="token punctuation">}</span>
+    waife<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Yuigahama"</span>
+    waife<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">17</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> waife<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{Yuigahama 17}</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+<h5 id="0x02-结构体是值类型"><a href="#0x02-结构体是值类型" class="headerlink" title="0x02 结构体是值类型"></a>0x02 结构体是值类型</h5><ul>
+<li><p>结构体是值类型，因此作为函数参数传入时，传入的是拷贝。</p>
+</li>
+<li><p>结构体指针访问成员变量时可以直接使用 <code>.</code>运算符 。这是因为 Go语言为了方便开发者访问结构体指针的成员变量，使用了语法糖（Syntactic sugar）技术，自动将 <code>p.name</code> 形式转换为 <code>(*p).name</code>。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">,</span> gender <span class="token builtin">string</span>
+    age          <span class="token builtin">int</span>
+    flag         <span class="token builtin">bool</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">change1</span><span class="token punctuation">(</span>p Person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">change2</span><span class="token punctuation">(</span>p <span class="token operator">*</span>Person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// (*p).flag = true</span>
+    p<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">true</span>  <span class="token comment" spellcheck="true">//go自动实现语法糖（*p）</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> p1 Person
+
+    p1<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">false</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> p1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//{    0 false}</span>
+                
+    <span class="token function">change1</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span>   
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> p1<span class="token punctuation">.</span>flag<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//false</span>
+
+    <span class="token function">change2</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p1<span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v\n"</span><span class="token punctuation">,</span> p1<span class="token punctuation">.</span>flag<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//true</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+<h5 id="0x03-结构体方法与接收器"><a href="#0x03-结构体方法与接收器" class="headerlink" title="0x03 结构体方法与接收器"></a>0x03 结构体方法与接收器</h5><ul>
+<li><p>Go方法是作用在接收器的一个函数，而接收器是某种类型。</p>
+</li>
+<li><p>接收器可以是几乎任意类型（接收器不能是接口类型），即几乎任意类型都可拥有方法。</p>
+</li>
+<li><p>方法的作用对象是接收器，而函数没有作用对象。</p>
+</li>
+<li><p>为接收器定义一个方法可理解为其它语言中为类定义方法，GO语言的接收器即某一类型。</p>
+</li>
+<li><p><strong>为类型定义方法</strong></p>
+<ul>
+<li><p>接收器名类似于python的self，php的$this，谁调用了方法就指向哪个实例。但官方建议使用接收器类型名的第一个小写字母作为接收器名，而不是self、this。</p>
 <blockquote>
-<p>从存放新闻的数据库表中获取数据，上图不同的框注的部分实际只是在进行SQL查询时，语句过滤的条件不同而已。之后将查询到的所有新闻数据传给模板语言，模板语言循环传入的数据并渲染显示内容（文章URL、文章标题）。</p>
+<p>func (接收器名 接收器类型) 方法名(参数列表) (返回参数) {</p>
+<p>​        函数体</p>
+<p>}</p>
 </blockquote>
-<p>每篇文章一般会使用不同的<code>id</code>参数标识。形如：<code>news.php?id=1</code></p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923105348921.png" alt="image-20200923105348921" style="zoom:50%;">
+</li>
+</ul>
+</li>
+<li><p><strong>值接收器与指针接收器</strong></p>
+<ul>
+<li><p>值接收器的接收器名变量是调用方法实例的拷贝。</p>
+</li>
+<li><p>指针接收器的接收器名变量是指向调用方法实例的指针。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name <span class="token builtin">string</span>
+    age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
 
-<p>存放新闻的数据表:</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100515760.png" alt="image-20200923100515760" style="zoom: 40%;">
+<span class="token comment" spellcheck="true">// 值接收者，p是调用该方法的实例的拷贝</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p Person<span class="token punctuation">)</span> <span class="token function">birthday1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p<span class="token punctuation">.</span>age<span class="token operator">++</span>
+<span class="token punctuation">}</span>
 
-<p>查询数据并传给模板语言：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100758860.png" alt="image-20200923100758860" style="zoom:50%;">
+<span class="token comment" spellcheck="true">// 指针接收者，p是指向调用该方法的实例的指针。</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>Person<span class="token punctuation">)</span> <span class="token function">birthday2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p<span class="token punctuation">.</span>age<span class="token operator">++</span>
+<span class="token punctuation">}</span>
 
-<p>模板循环数据进行渲染：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923101019763.png" alt="image-20200923101019763" style="zoom: 50%;">
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p1 <span class="token operator">:=</span> Person<span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span> <span class="token string">"Mikasa"</span><span class="token punctuation">,</span>
+        age<span class="token punctuation">:</span>  <span class="token number">17</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
 
-<h5 id="文章分类页"><a href="#文章分类页" class="headerlink" title="文章分类页"></a><strong>文章分类页</strong></h5><p>文章分类页同理，只不过是根据文章表的<code>cid</code>字段，即分类字段进行过滤查询结果。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923111410133.png" alt="image-20200923111410133" style="zoom:40%;">
+    p1<span class="token punctuation">.</span><span class="token function">birthday1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//17。值接收器修改不生效，因为修改的是拷贝。</span>
 
-<h2 id="导航条"><a href="#导航条" class="headerlink" title="导航条"></a>导航条</h2><img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923112411381.png" alt="image-20200923112411381" style="zoom:50%;">
-
-<p><strong>实现逻辑</strong></p>
+    p1<span class="token punctuation">.</span><span class="token function">birthday2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>age<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//18。指针接收器修改生效。</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+<li><p>总结</p>
 <blockquote>
-<p>将导航条各个菜单项的信息存储到数据库的一个表中，在显示页面时将其从数据库中读出传给模板引擎进行渲染。</p>
+<ul>
+<li>方法要修改结构体成员内容，使用指针接收者。</li>
+<li>方法不涉及修改结构体成员内容，使用值接收者。</li>
+</ul>
 </blockquote>
-<p>存放菜单项的数据表：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923113839727.png" alt="image-20200923113839727" style="zoom:50%;">
+</li>
+</ul>
+</li>
+<li><p><strong>Go语言可以使用<code>type</code>定义出自定义类型，之后我们可以为新自定义的类型定义方法。</strong></p>
+<blockquote>
+<p>当我们想让某种类型增加某个功能，就可以使用type生成新的类型，然后对新的类型添加方法，就可以达到既拥有原有类型所有特性，又可以添加实现某些附加的功能。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">package</span> main
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
 
-<p>从数据库中查询：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="img" style="zoom:40%;">
+<span class="token keyword">type</span> New_int <span class="token builtin">int</span>
 
-<p>传到页面进行渲染显示：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="Untitled.png (1699×376)" style="zoom:40%;">
+<span class="token keyword">func</span> <span class="token punctuation">(</span>n New_int<span class="token punctuation">)</span> <span class="token function">Is_Zero</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> test New_int <span class="token operator">=</span> <span class="token number">0</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span><span class="token function">Is_Zero</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//true</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+<h5 id="0x04-匿名字段结构体"><a href="#0x04-匿名字段结构体" class="headerlink" title="0x04 匿名字段结构体"></a>0x04 匿名字段结构体</h5><ul>
+<li><p>使用匿名结构体要求同一种类型只能出现一次。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">type</span> Test <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+        <span class="token builtin">string</span>
+        <span class="token builtin">int</span>
+    <span class="token punctuation">}</span>
+
+    t <span class="token operator">:=</span> Test<span class="token punctuation">{</span>
+        <span class="token string">"Aqua"</span><span class="token punctuation">,</span>
+        <span class="token number">14</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Aqua</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token builtin">int</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//14</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">type</span> address <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+        province <span class="token builtin">string</span>
+        city     <span class="token builtin">string</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+        name    <span class="token builtin">string</span>
+        age     <span class="token builtin">int</span>
+        address <span class="token comment" spellcheck="true">//匿名字段</span>
+    <span class="token punctuation">}</span>
+
+    p1 <span class="token operator">:=</span> <span class="token operator">&amp;</span>Person<span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span> <span class="token string">"Aqua"</span><span class="token punctuation">,</span>
+        age<span class="token punctuation">:</span>  <span class="token number">1000</span><span class="token punctuation">,</span>
+        address<span class="token punctuation">:</span> address<span class="token punctuation">{</span>
+             province<span class="token punctuation">:</span> <span class="token string">"GZ"</span><span class="token punctuation">,</span>
+             city<span class="token punctuation">:</span>     <span class="token string">"DY"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{Aqua 1000 {GZ DY}}</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>address<span class="token punctuation">.</span>province<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//GZ</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>province<span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">//GZ。与上面等价，可以直接取，但注意同名冲突。</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+<li><p>模拟实现继承</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> animal <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name  <span class="token builtin">string</span>
+    color <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>a <span class="token operator">*</span>animal<span class="token punctuation">)</span> <span class="token function">move</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s move move move !!!"</span><span class="token punctuation">,</span> a<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> Cat <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    name   <span class="token builtin">string</span>
+    animal <span class="token comment" spellcheck="true">//匿名结构体</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token operator">&amp;</span>Cat<span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span>   <span class="token string">"feipei"</span><span class="token punctuation">,</span>
+        animal<span class="token punctuation">:</span> animal<span class="token punctuation">{</span>name<span class="token punctuation">:</span> <span class="token string">"feipei"</span><span class="token punctuation">,</span> color<span class="token punctuation">:</span> <span class="token string">"yellow"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&amp;{feipei {feipei yellow}}</span>
+    c<span class="token punctuation">.</span><span class="token function">move</span><span class="token punctuation">(</span><span class="token punctuation">)</span>       <span class="token comment" spellcheck="true">//feipei move move move !!!。继承了animal结构体的move方法。</span>
+                   <span class="token comment" spellcheck="true">//其实是c.animal.move()</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+
             </div>
             <hr/>
 
@@ -844,7 +1131,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/">http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/</a>
+                    <a href="http://a4ua.github.io/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/">http://a4ua.github.io/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -882,8 +1169,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/BlueCMS/">
-                                    <span class="chip bg-color">BlueCMS</span>
+                                <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                    <span class="chip bg-color">Go基础知识</span>
                                 </a>
                             
                         </div>
@@ -1189,13 +1476,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/10/12/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%AE%B9%E5%99%A8%EF%BC%88%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87%E3%80%81%E6%98%A0%E5%B0%84%EF%BC%89/">
+                <a href="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Golang学习之路—容器（数组、切片、映射）">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Golang学习之路—接口">
                         
-                        <span class="card-title">Golang学习之路—容器（数组、切片、映射）</span>
+                        <span class="card-title">Golang学习之路—接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1206,7 +1493,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-13
                         </span>
                         <span class="publish-author">
                             
@@ -1238,13 +1525,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/09/22/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98%E2%80%94BlueCMS/">
+                <a href="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="代码审计入门实战—BlueCMS">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Golang学习之路—基本数据类型">
                         
-                        <span class="card-title">代码审计入门实战—BlueCMS</span>
+                        <span class="card-title">Golang学习之路—基本数据类型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1255,14 +1542,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    代码审计
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
                                 </a>
                             
                             
@@ -1272,12 +1559,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">PHP代码审计</span>
-                    </a>
-                    
-                    <a href="/tagsio/BlueCMS/">
-                        <span class="chip bg-color">BlueCMS</span>
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
                     </a>
                     
                 </div>

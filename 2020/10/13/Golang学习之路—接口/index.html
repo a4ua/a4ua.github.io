@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BlueCMS功能点实现代码逻辑, a4ua">
+    <meta name="keywords" content="Golang学习之路—接口, a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>BlueCMS功能点实现代码逻辑 | a4ua</title>
+    <title>Golang学习之路—接口 | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -606,12 +606,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">BlueCMS功能点实现代码逻辑</h1>
+                    <h1 class="description center-align post-title">Golang学习之路—接口</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/BlueCMS/">
-                                <span class="chip bg-color">BlueCMS</span>
+                            <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                <span class="chip bg-color">Go基础知识</span>
                             </a>
                         
                     </div>
@@ -740,8 +740,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/PHP/" class="post-category">
-                                PHP
+                            <a href="/categories/Golang/" class="post-category">
+                                Golang
                             </a>
                         
                     </div>
@@ -753,21 +753,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    281
+                    1.2k
                 </div>
                 
 
@@ -784,42 +784,234 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="新闻列表"><a href="#新闻列表" class="headerlink" title="新闻列表"></a>新闻列表</h2><p>如下图，首页上的新闻列表。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923095406406.png" alt="image-20200923095406406" style="zoom:50%;">
-
-<p><strong>实现逻辑</strong></p>
-<blockquote>
-<p>从存放新闻的数据库表中获取数据，上图不同的框注的部分实际只是在进行SQL查询时，语句过滤的条件不同而已。之后将查询到的所有新闻数据传给模板语言，模板语言循环传入的数据并渲染显示内容（文章URL、文章标题）。</p>
+                <h2 id="一、接口（interface）定义"><a href="#一、接口（interface）定义" class="headerlink" title="一、接口（interface）定义"></a>一、接口（interface）定义</h2><blockquote>
+<p><strong>接口是一种类型。</strong></p>
+<p><strong>接口是一种类型。</strong></p>
+<p><strong>接口是一种类型。</strong></p>
 </blockquote>
-<p>每篇文章一般会使用不同的<code>id</code>参数标识。形如：<code>news.php?id=1</code></p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923105348921.png" alt="image-20200923105348921" style="zoom:50%;">
+<ul>
+<li><p>接口是一种约束类型，某个类型实现了某个接口，那么该类型就属于该接口类型。</p>
+<ul>
+<li>就可以用该接口类型的变量去接收实现了该接口的类型的数据。</li>
+<li>意味着一个接口类型的变量可以作为形参接收多个类型的数据。</li>
+</ul>
+</li>
+<li><p>接口是一组方法的集合，接口只关注实现了什么方法，而不关心方法实现的具体细节。</p>
+</li>
+<li><p>接口类型名即接口名，通常在名称后面加<code>er</code>表示接口。</p>
+</li>
+<li><p>当接口名和方法名的首字母都是大写时，该方法可以被该方法所在包以外的地方访问。</p>
+</li>
+<li><p><strong>接口类型定义</strong></p>
+<ul>
+<li><p>参数列表和返回值列表的变量名称可以省略，类型才是必须的，即可以只写类型。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> 接口名 <span class="token keyword">interface</span><span class="token punctuation">{</span>
+     方法名<span class="token function">1</span><span class="token punctuation">(</span> 参数<span class="token number">1</span><span class="token punctuation">,</span>参数<span class="token number">2</span>… <span class="token punctuation">)</span> <span class="token punctuation">(</span>返回值<span class="token number">1</span><span class="token punctuation">,</span>返回值<span class="token number">2</span><span class="token punctuation">)</span>
+     方法名<span class="token function">2</span><span class="token punctuation">(</span> 参数<span class="token number">1</span><span class="token punctuation">,</span>参数<span class="token number">2</span>… <span class="token punctuation">)</span> <span class="token punctuation">(</span>返回值<span class="token number">1</span><span class="token punctuation">,</span>返回值<span class="token number">2</span><span class="token punctuation">)</span>
+     …
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、接口实现"><a href="#二、接口实现" class="headerlink" title="二、接口实现"></a>二、接口实现</h2><ul>
+<li><p><strong>实现接口的条件</strong></p>
+<ul>
+<li>一个对象实现了接口的所有方法，那么就实现了这个接口。</li>
+<li>实现接口的类型的方法的签名必须要与接口的方法的签名一致。（函数名、参数、返回值）</li>
+</ul>
+</li>
+<li><p><strong>接口与类型的关系</strong></p>
+<ul>
+<li><p>一个类型可以实现多个接口。</p>
+</li>
+<li><p>一个接口可以被多个类型实现。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Car <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-<p>存放新闻的数据表:</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100515760.png" alt="image-20200923100515760" style="zoom: 40%;">
+<span class="token keyword">type</span> Porsche <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+  name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
 
-<p>查询数据并传给模板语言：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100758860.png" alt="image-20200923100758860" style="zoom:50%;">
+<span class="token keyword">type</span> Benz <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+  name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
 
-<p>模板循环数据进行渲染：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923101019763.png" alt="image-20200923101019763" style="zoom: 50%;">
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p Porsche<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s running...\n"</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-<h5 id="文章分类页"><a href="#文章分类页" class="headerlink" title="文章分类页"></a><strong>文章分类页</strong></h5><p>文章分类页同理，只不过是根据文章表的<code>cid</code>字段，即分类字段进行过滤查询结果。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923111410133.png" alt="image-20200923111410133" style="zoom:40%;">
+<span class="token keyword">func</span> <span class="token punctuation">(</span>b Benz<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s running...\n"</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-<h2 id="导航条"><a href="#导航条" class="headerlink" title="导航条"></a>导航条</h2><img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923112411381.png" alt="image-20200923112411381" style="zoom:50%;">
+<span class="token keyword">func</span> <span class="token function">drive</span><span class="token punctuation">(</span>c Car<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  c<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-<p><strong>实现逻辑</strong></p>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  ps <span class="token operator">:=</span> Porsche<span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">"Porsche"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+           
+  bz <span class="token operator">:=</span> Benz<span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">"Benz"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">drive</span><span class="token punctuation">(</span>ps<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Porsche running...</span>
+  <span class="token function">drive</span><span class="token punctuation">(</span>bz<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//Benz running...</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、值接收器和指针接收器"><a href="#三、值接收器和指针接收器" class="headerlink" title="三、值接收器和指针接收器"></a>三、值接收器和指针接收器</h2><ul>
+<li><p><strong>实现接口的方法时用值接收器则是结构体实现了接口。</strong></p>
+<ul>
+<li>结构体及结构体指针都可以赋值给接口变量。</li>
+</ul>
+</li>
+<li><p><strong>实现接口函数时使用指针接收器是结构体指针实现了接口。</strong></p>
+<ul>
+<li><p>只能使用结构体指针赋值给接口变量。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> speaker <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+  <span class="token function">speaker</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> cat <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+  name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//指针接收器</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>cat<span class="token punctuation">)</span> <span class="token function">speaker</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"miao miao miao ~"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> s speaker
+
+  c <span class="token operator">:=</span> cat<span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">"feipei"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment" spellcheck="true">// s = c 报错，因为实现接口的不是cat，而是*cat，所以只能用结构体指针赋值给接口变量。</span>
+  s <span class="token operator">=</span> <span class="token operator">&amp;</span>c
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、接口类型断言"><a href="#三、接口类型断言" class="headerlink" title="三、接口类型断言"></a>三、接口类型断言</h2><ul>
+<li><p>接口也是使用两个字长的数据结构。</p>
+<ul>
+<li><p>第一个字是当前接口存储的值的类型。</p>
+</li>
+<li><p>第二个字是当前接口存储的对象。</p>
+  <img src="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/未命名图片.png" alt="未命名图片" style="zoom:33%;">
+
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> tester <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+  <span class="token function">whatever</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> st1 <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+  name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> st2 <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+  name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s st1<span class="token punctuation">)</span> <span class="token function">whatever</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"st1"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s st2<span class="token punctuation">)</span> <span class="token function">whatever</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"st2"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  s1 <span class="token operator">:=</span> st1<span class="token punctuation">{</span>name<span class="token punctuation">:</span> <span class="token string">"s1"</span><span class="token punctuation">}</span>
+  s2 <span class="token operator">:=</span> st2<span class="token punctuation">{</span>name<span class="token punctuation">:</span> <span class="token string">"s2"</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">var</span> iface tester
+  fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T %v\n"</span><span class="token punctuation">,</span> iface<span class="token punctuation">,</span> iface<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//&lt;nil> &lt;nil></span>
+
+  iface <span class="token operator">=</span> s1
+  fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T %v\n"</span><span class="token punctuation">,</span> iface<span class="token punctuation">,</span> iface<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//main.st1 {s1}</span>
+
+  iface <span class="token operator">=</span> s2
+  fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T %v\n"</span><span class="token punctuation">,</span> iface<span class="token punctuation">,</span> iface<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//main.st2 {s2}</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h5><ul>
+<li><p>类型断言即断言当前接口存储的值的类型。</p>
 <blockquote>
-<p>将导航条各个菜单项的信息存储到数据库的一个表中，在显示页面时将其从数据库中读出传给模板引擎进行渲染。</p>
+<ul>
+<li>x.(T)       //断言<code>x</code>接口变量存储（指向）的值的类型为<code>T</code>。</li>
+</ul>
 </blockquote>
-<p>存放菜单项的数据表：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923113839727.png" alt="image-20200923113839727" style="zoom:50%;">
+<ul>
+<li><p>会返回两个参数：</p>
+<ul>
+<li>若断言成功返回的第一个参数是<code>x</code>接口变量指向的类型的值。</li>
+<li>第二个值是一个布尔值，若为<code>true</code>则表示断言成功，为false则表示断言失败。</li>
+</ul>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">var</span> x <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">//空接口可以接收任意类型的值。</span>
+i <span class="token operator">:=</span> <span class="token number">1</span>
+x <span class="token operator">=</span> i  <span class="token comment" spellcheck="true">//此时x接口变量指向int类型的数据。</span>
 
-<p>从数据库中查询：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="img" style="zoom:40%;">
+v<span class="token punctuation">,</span> ok <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//断言，第一个参数接收值，第二个参数是判断是否为int的断言结果</span>
+<span class="token keyword">if</span> ok <span class="token punctuation">{</span>
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//1</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+<li><p>若断言的类型是值类型，则返回的值是拷贝。断言引用类型返回的是引用。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-<p>传到页面进行渲染显示：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="Untitled.png (1699×376)" style="zoom:40%;">
+    <span class="token keyword">var</span> a <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    array1 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
+    slc <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//断言值类型</span>
+    a <span class="token operator">=</span> array1
+    v<span class="token punctuation">,</span> ok <span class="token operator">:=</span> a<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ok <span class="token punctuation">{</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//[1 2 3]</span>
+        array1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">111</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//[1 2 3]。值未改变，因此值类型断言返回的值是拷贝。</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//断言引用类型</span>
+    a <span class="token operator">=</span> slc
+    v1<span class="token punctuation">,</span> ok <span class="token operator">:=</span> a<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ok <span class="token punctuation">{</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//[4 5 6]</span>
+        slc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">111</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//[111 5 6]。值发生了改变，因此引用类型断言返回的是引用。</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+<h2 id="四、空接口（interface-）"><a href="#四、空接口（interface-）" class="headerlink" title="四、空接口（interface{}）"></a>四、空接口（interface{}）</h2><blockquote>
+<p><strong>空接口是没有定义任何方法的接口，因此所有类型都实现了空接口，因此空接口类型的变量可以接收存储任意类型的变量。</strong></p>
+</blockquote>
+<ul>
+<li><strong>空接口的主要应用：</strong><ul>
+<li>使用空接口作为函数形参，可以实现接收任意类型参数。     <code>func test(a interface{}){}</code></li>
+<li>使用空接口作为map的值的类型，可以实现map的值为任意类型。  <code>x := make( map[int]interface{} )</code></li>
+<li>空接口类型的chan可以实现传输任意类型数据。       <code>ch := make(chan interface{})</code></li>
+</ul>
+</li>
+</ul>
+
             </div>
             <hr/>
 
@@ -844,7 +1036,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/">http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/</a>
+                    <a href="http://a4ua.github.io/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/">http://a4ua.github.io/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -882,8 +1074,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/BlueCMS/">
-                                    <span class="chip bg-color">BlueCMS</span>
+                                <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                    <span class="chip bg-color">Go基础知识</span>
                                 </a>
                             
                         </div>
@@ -1185,17 +1377,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/12/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%AE%B9%E5%99%A8%EF%BC%88%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87%E3%80%81%E6%98%A0%E5%B0%84%EF%BC%89/">
+                <a href="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Golang学习之路—容器（数组、切片、映射）">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Golang学习之路—接口">
                         
-                        <span class="card-title">Golang学习之路—容器（数组、切片、映射）</span>
+                        <span class="card-title">Golang学习之路—接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1205,9 +1398,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1220,6 +1413,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1238,13 +1432,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/09/22/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98%E2%80%94BlueCMS/">
+                <a href="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="代码审计入门实战—BlueCMS">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Golang学习之路—结构体">
                         
-                        <span class="card-title">代码审计入门实战—BlueCMS</span>
+                        <span class="card-title">Golang学习之路—结构体</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1255,14 +1449,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    代码审计
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
                                 </a>
                             
                             
@@ -1272,12 +1466,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">PHP代码审计</span>
-                    </a>
-                    
-                    <a href="/tagsio/BlueCMS/">
-                        <span class="chip bg-color">BlueCMS</span>
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
                     </a>
                     
                 </div>
