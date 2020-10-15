@@ -1,0 +1,2016 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Golang学习之路—IO, a4ua">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Golang学习之路—IO | a4ua</title>
+    <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/tx.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">a4ua</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-secret" style="zoom: 0.6;"></i>
+      
+      <span>Cyber Security</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/Web%E5%AE%89%E5%85%A8/">
+          
+          <i class="fas fa-bug" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Web安全</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+          
+          <i class="fas fa-code" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>代码审计</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+          
+          <i class="fas fa-desktop" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>内网渗透</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-shield-alt" style="zoom: 0.6;"></i>
+      
+      <span>Blue Team</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">
+          
+          <i class="fas fa-user-nurse" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>应急响应</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">
+          
+          <i class="fas fa-fingerprint" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>日志分析</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+          
+          <i class="fas fa-file-contract" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>流量分析</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-laptop-code" style="zoom: 0.6;"></i>
+      
+      <span>编程</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/Golang/">
+          
+          <i class="fab fa-google" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Golang</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/Python/">
+          
+          <i class="fab fa-python" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Python</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/PHP/">
+          
+          <i class="fab fa-php" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>PHP</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fab fa-linux" style="zoom: 0.6;"></i>
+      
+      <span>操作系统</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/linux/">
+          
+          <i class="fab fa-linux" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Linux</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/windows/">
+          
+          <i class="fab fa-windows" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Windows</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="waves-effect waves-light">
+      
+      <i class="fas fa-leaf" style="zoom: 0.6;"></i>
+      
+      <span>机器学习</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-seedling" style="zoom: 0.6;"></i>
+      
+      <span>瞎折腾系列</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/">
+          
+          <i class="fas fa-magic" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>桌面美化</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-bars" style="zoom: 0.6;"></i>
+      
+      <span>其它</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章分类</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于我</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/tx.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">a4ua</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-secret"></i>
+			
+			Cyber Security
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/Web%E5%AE%89%E5%85%A8/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bug" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Web安全</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-code" style="position: absolute;left:50px" ></i>
+			      
+		          <span>代码审计</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-desktop" style="position: absolute;left:50px" ></i>
+			      
+		          <span>内网渗透</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-shield-alt"></i>
+			
+			Blue Team
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-nurse" style="position: absolute;left:50px" ></i>
+			      
+		          <span>应急响应</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-fingerprint" style="position: absolute;left:50px" ></i>
+			      
+		          <span>日志分析</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-file-contract" style="position: absolute;left:50px" ></i>
+			      
+		          <span>流量分析</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-laptop-code"></i>
+			
+			编程
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/Golang/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-google" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Golang</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/Python/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-python" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Python</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/PHP/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-php" style="position: absolute;left:50px" ></i>
+			      
+		          <span>PHP</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fab fa-linux"></i>
+			
+			操作系统
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/linux/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-linux" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Linux</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/windows/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-windows" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Windows</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-leaf"></i>
+			
+			机器学习
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-seedling"></i>
+			
+			瞎折腾系列
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-magic" style="position: absolute;left:50px" ></i>
+			      
+		          <span>桌面美化</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-bars"></i>
+			
+			其它
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章分类</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于我</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Golang学习之路—IO</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                <span class="chip bg-color">Go基础知识</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Golang/" class="post-category">
+                                Golang
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-10-15
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.8k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="一、io-Reader-io-Writer"><a href="#一、io-Reader-io-Writer" class="headerlink" title="一、io.Reader/io.Writer"></a>一、io.Reader/io.Writer</h2><blockquote>
+<p>在Go中，<code>io.Reader</code>和<code>io.Writer</code>是很常见的两个接口，遂做个总结。</p>
+</blockquote>
+<h5 id="0x00-io-Reader"><a href="#0x00-io-Reader" class="headerlink" title="0x00 io.Reader"></a>0x00 io.Reader</h5><p>接口定义如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// Reader is the interface that wraps the basic Read method.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// Read reads up to len(p) bytes into p. It returns the number of bytes</span>
+<span class="token comment" spellcheck="true">// read (0 &lt;= n &lt;= len(p)) and any error encountered. Even if Read</span>
+<span class="token comment" spellcheck="true">// returns n &lt; len(p), it may use all of p as scratch space during the call.</span>
+<span class="token comment" spellcheck="true">// If some data is available but not len(p) bytes, Read conventionally</span>
+<span class="token comment" spellcheck="true">// returns what is available instead of waiting for more.</span>
+<span class="token keyword">type</span> Reader <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">Read</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li><p><code>Read</code>方法实现从”输入流”中读取<code>len(p)</code>长度的数据到切片<code>p</code>中，并返回读取的数据的长度（<code>0&lt;=n&lt;=len(p)</code>）及<code>error</code>。</p>
+</li>
+<li><p>当”输入流”可读取的数据长度小于<code>len(p)</code>时，会直接读取当前可读取的数据，而不会等待数据流数据达到<code>len(p)</code>。</p>
+</li>
+<li><p>读取到输入流最后时，会返回EOF错误<code>err=EOF</code>。</p>
+</li>
+<li><p><code>Read</code>方法返回值<code>n</code>与<code>err</code>可能出现的情况：</p>
+<ul>
+<li><p>正常读取且输入流数据未读取完时：<code>n=len(p),err=nil</code></p>
+</li>
+<li><p>从输入流中读取最后的<code>x</code>字节（<code>x&lt;len(p)</code>）长度数据：<code>n=x,err=EOF</code>。再进行一次读取，就会得到：<code>n=0,err=EOF</code></p>
+<blockquote>
+<p>结论：应该总是先考虑<code>n&gt;0</code>的情况，即成功读取了<code>n</code>字节数据，再考虑处理<code>err</code>，因为在下一次读取数据时还是会得到<code>n=0,err=EOF</code>错误。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>几点总结：</strong></p>
+<ul>
+<li>前面说的“输入流”可以是文件、标准输入输出、切片等等，是什么取决于<code>Read</code>方法的实际实现，由谁提供数据作为数据源。</li>
+<li>实现了<code>io.Reader</code>接口的，则可以将其当作<code>数据源</code>，因为它终究目的是会被调用其<code>Read</code>方法。</li>
+</ul>
+<h5 id="0x01-io-Writer"><a href="#0x01-io-Writer" class="headerlink" title="0x01 io.Writer"></a>0x01 io.Writer</h5><p>接口定义如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// Writer is the interface that wraps the basic Write method.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// Write writes len(p) bytes from p to the underlying data stream.</span>
+<span class="token comment" spellcheck="true">// It returns the number of bytes written from p (0 &lt;= n &lt;= len(p))</span>
+<span class="token comment" spellcheck="true">// and any error encountered that caused the write to stop early.</span>
+<span class="token comment" spellcheck="true">// Write must return a non-nil error if it returns n &lt; len(p).</span>
+<span class="token comment" spellcheck="true">// Write must not modify the slice data, even temporarily.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// Implementations must not retain p.</span>
+<span class="token keyword">type</span> Writer <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">Write</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li><code>Write</code>方法实现将<code>p</code>中<code>len(p)</code>长度数据的数据写入输出流中,并返回写入的字节数（<code>n&lt;=0&lt;=len(p)</code>）及<code>error</code>，当<code>n&gt;0</code>时(表示成功写入了<code>n</code>字节数据)，<code>err</code>必须为<code>nil</code>。</li>
+</ul>
+<p><strong>几点总结：</strong></p>
+<ul>
+<li>前面说的“输出流”可以是文件、标准输入输出、切片等等，是什么取决于<code>Write</code>方法的实际实现。</li>
+<li>实现了<code>io.Writer</code>接口的，则可以将其当作<code>数据输出</code>，因为它终究目的是会被调用其<code>Write</code>方法。</li>
+</ul>
+<h5 id="0x03-io-ReadFrom-io-WriteTo"><a href="#0x03-io-ReadFrom-io-WriteTo" class="headerlink" title="0x03 io.ReadFrom/io.WriteTo"></a>0x03 io.ReadFrom/io.WriteTo</h5><blockquote>
+<p>这两个接口实际是对<code>io.Reader</code>和<code>io.Writer</code>接口的二次封装：</p>
+<ul>
+<li>其中<code>ReadFrom</code>方法实现持续读取数据直到<code>EOF</code>，本质是多次调用<code>io.Reader</code>的<code>Read</code>方法，并判断是否<code>EOF</code>。</li>
+<li>其中<code>WriteTo</code>方法实现持续写入数据直到没有数据，本质是多次调用<code>io.Writer</code>的<code>Read</code>方法，并判断是否写完数据。</li>
+</ul>
+</blockquote>
+<p>接口定义如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// ReaderFrom is the interface that wraps the ReadFrom method.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// ReadFrom reads data from r until EOF or error.</span>
+<span class="token comment" spellcheck="true">// The return value n is the number of bytes read.</span>
+<span class="token comment" spellcheck="true">// Any error except io.EOF encountered during the read is also returned.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// The Copy function uses ReaderFrom if available.</span>
+<span class="token keyword">type</span> ReaderFrom <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">ReadFrom</span><span class="token punctuation">(</span>r Reader<span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// WriterTo is the interface that wraps the WriteTo method.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// WriteTo writes data to w until there's no more data to write or</span>
+<span class="token comment" spellcheck="true">// when an error occurs. The return value n is the number of bytes</span>
+<span class="token comment" spellcheck="true">// written. Any error encountered during the write is also returned.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// The Copy function uses WriterTo if available.</span>
+<span class="token keyword">type</span> WriterTo <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">WriteTo</span><span class="token punctuation">(</span>w Writer<span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="二、io"><a href="#二、io" class="headerlink" title="二、io"></a>二、io</h2><h5 id="0x00-io-Copy-io-CopyBuffer"><a href="#0x00-io-Copy-io-CopyBuffer" class="headerlink" title="0x00 io.Copy()/io.CopyBuffer()"></a>0x00 io.Copy()/io.CopyBuffer()</h5><blockquote>
+<p>函数实现数据复制功能。从<code>io.Reader</code>读取数据（实质调用<code>Read</code>方法）写入<code>io.Writer</code>中（实质调用<code>Write</code>）方法。</p>
+<p><code>io.Copy()</code>与<code>io.CopyBuffer()</code>的区别在于，前者自动帮我们实现了缓存，而后者需要我们自行实现，然而实质上它们最终都会调用<code>io.copyBuffer()</code>函数。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Copy</span><span class="token punctuation">(</span>dst Writer<span class="token punctuation">,</span> src Reader<span class="token punctuation">)</span> <span class="token punctuation">(</span>written <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">copyBuffer</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> src<span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//实际调用的是io.copyBuffer</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">CopyBuffer</span><span class="token punctuation">(</span>dst Writer<span class="token punctuation">,</span> src Reader<span class="token punctuation">,</span> buf <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>written <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> buf <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token operator">&amp;&amp;</span> <span class="token function">len</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"empty buffer in io.CopyBuffer"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">copyBuffer</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> src<span class="token punctuation">,</span> buf<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">copyBuffer</span><span class="token punctuation">(</span>dst Writer<span class="token punctuation">,</span> src Reader<span class="token punctuation">,</span> buf <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>written <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 如果实现了ReaderFrom和WriterTo接口，则优先调用ReadFrom()和WriteTo()方法。</span>
+    <span class="token comment" spellcheck="true">// Avoids an allocation and a copy.</span>
+    <span class="token keyword">if</span> wt<span class="token punctuation">,</span> ok <span class="token operator">:=</span> src<span class="token punctuation">.</span><span class="token punctuation">(</span>WriterTo<span class="token punctuation">)</span><span class="token punctuation">;</span> ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> wt<span class="token punctuation">.</span><span class="token function">WriteTo</span><span class="token punctuation">(</span>dst<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// Similarly, if the writer has a ReadFrom method, use it to do the copy.</span>
+    <span class="token keyword">if</span> rt<span class="token punctuation">,</span> ok <span class="token operator">:=</span> dst<span class="token punctuation">.</span><span class="token punctuation">(</span>ReaderFrom<span class="token punctuation">)</span><span class="token punctuation">;</span> ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> rt<span class="token punctuation">.</span><span class="token function">ReadFrom</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> buf <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//自动创建缓存</span>
+        size <span class="token operator">:=</span> <span class="token number">32</span> <span class="token operator">*</span> <span class="token number">1024</span>
+        <span class="token keyword">if</span> l<span class="token punctuation">,</span> ok <span class="token operator">:=</span> src<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token operator">*</span>LimitedReader<span class="token punctuation">)</span><span class="token punctuation">;</span> ok <span class="token operator">&amp;&amp;</span> <span class="token function">int64</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span> <span class="token operator">></span> l<span class="token punctuation">.</span>N <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> l<span class="token punctuation">.</span>N <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token punctuation">{</span>
+                size <span class="token operator">=</span> <span class="token number">1</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                size <span class="token operator">=</span> <span class="token function">int</span><span class="token punctuation">(</span>l<span class="token punctuation">.</span>N<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        buf <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//用于存储数据</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">{</span>
+        nr<span class="token punctuation">,</span> er <span class="token operator">:=</span> src<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//调用io.Reader的Read方法读取数据到buf缓存中。</span>
+        <span class="token keyword">if</span> nr <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            nw<span class="token punctuation">,</span> ew <span class="token operator">:=</span> dst<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>buf<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>nr<span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//调用io.Writer的Write方法将buf缓存中的数据写入。</span>
+            <span class="token keyword">if</span> nw <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>
+                written <span class="token operator">+=</span> <span class="token function">int64</span><span class="token punctuation">(</span>nw<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> ew <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+                err <span class="token operator">=</span> ew
+                <span class="token keyword">break</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> nr <span class="token operator">!=</span> nw <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//写入数据的长度不等于读取的数据的长度，即写入数据发生问题。</span>
+                err <span class="token operator">=</span> ErrShortWrite
+                <span class="token keyword">break</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> er <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//读取数据EOF或其它错误发生</span>
+            <span class="token keyword">if</span> er <span class="token operator">!=</span> EOF <span class="token punctuation">{</span>
+                err <span class="token operator">=</span> er
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> written<span class="token punctuation">,</span> err
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="0x01-io-Pipe"><a href="#0x01-io-Pipe" class="headerlink" title="0x01 io.Pipe()"></a>0x01 io.Pipe()</h5><blockquote>
+<p>创建一个管道（本质是一个被<code>io.Reader</code>和<code>io.Writer</code>共享的<code>chan []byte</code>）。</p>
+<p>管道没有实现缓存，因此管道最多只能存在一个元素。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Pipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>PipeReader<span class="token punctuation">,</span> <span class="token operator">*</span>PipeWriter<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    p <span class="token operator">:=</span> <span class="token operator">&amp;</span>pipe<span class="token punctuation">{</span>
+        wrCh<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        rdCh<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        done<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token operator">&amp;</span>PipeReader<span class="token punctuation">{</span>p<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>PipeWriter<span class="token punctuation">{</span>p<span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">//两个结构体分别实现了Reader和Writer接口，但最终都会调用到pipe结构体的Read和Write方法。两个使用同一个pipe实现共享内存。</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> pipe <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    wrMu sync<span class="token punctuation">.</span>Mutex <span class="token comment" spellcheck="true">// Serializes Write operations</span>
+    wrCh <span class="token keyword">chan</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span>
+    rdCh <span class="token keyword">chan</span> <span class="token builtin">int</span>
+
+    once sync<span class="token punctuation">.</span>Once <span class="token comment" spellcheck="true">// Protects closing done</span>
+    done <span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    rerr onceError
+    werr onceError
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>pipe<span class="token punctuation">)</span> <span class="token function">Read</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>done<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span><span class="token function">readCloseError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> bw <span class="token operator">:=</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>wrCh<span class="token punctuation">:</span>
+        nr <span class="token operator">:=</span> <span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> bw<span class="token punctuation">)</span>
+        p<span class="token punctuation">.</span>rdCh <span class="token operator">&lt;-</span> nr
+        <span class="token keyword">return</span> nr<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+    <span class="token keyword">case</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>done<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span><span class="token function">readCloseError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p <span class="token operator">*</span>pipe<span class="token punctuation">)</span> <span class="token function">Write</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>done<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> p<span class="token punctuation">.</span><span class="token function">writeCloseError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+        p<span class="token punctuation">.</span>wrMu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">defer</span> p<span class="token punctuation">.</span>wrMu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span> once <span class="token operator">:=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> once <span class="token operator">||</span> <span class="token function">len</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span> once <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token punctuation">{</span>
+        <span class="token keyword">select</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> p<span class="token punctuation">.</span>wrCh <span class="token operator">&lt;-</span> b<span class="token punctuation">:</span>
+            nw <span class="token operator">:=</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>rdCh
+            b <span class="token operator">=</span> b<span class="token punctuation">[</span>nw<span class="token punctuation">:</span><span class="token punctuation">]</span>
+            n <span class="token operator">+=</span> nw
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>p<span class="token punctuation">.</span>done<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> n<span class="token punctuation">,</span> p<span class="token punctuation">.</span><span class="token function">writeCloseError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> n<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="三、io-ioutil"><a href="#三、io-ioutil" class="headerlink" title="三、io/ioutil"></a>三、io/ioutil</h2><blockquote>
+<p><code>ioutil</code>是<code>io</code>包下的一个子包，实际是对<code>io</code>的封装以提供一些便利的函数。</p>
+</blockquote>
+<h5 id="0x00-ioutil-ReadAll"><a href="#0x00-ioutil-ReadAll" class="headerlink" title="0x00 ioutil.ReadAll()"></a>0x00 ioutil.ReadAll()</h5><pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">//顾名思义，ReadAll函数会读取io.Reader的所有数据并返回。（不断读取数据，直到EOF）</span>
+<span class="token comment" spellcheck="true">//ReadAll函数返回的是读取到的所有数据，而且成功的调用err应该始终为nil，即err=EOF的情况已经在内部实现了，ReadAll不用考虑。</span>
+<span class="token keyword">func</span> <span class="token function">ReadAll</span><span class="token punctuation">(</span>r io<span class="token punctuation">.</span>Reader<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">readAll</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> bytes<span class="token punctuation">.</span>MinRead<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h5 id="0x01-ioutil-ReadFile"><a href="#0x01-ioutil-ReadFile" class="headerlink" title="0x01 ioutil.ReadFile()"></a>0x01 ioutil.ReadFile()</h5><pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// ReadFile 函数与ReadAll函数的区别只在于，ReadFile限定io.Reader为文件，即会读取整个文件的内容并返回。</span>
+<span class="token keyword">func</span> <span class="token function">ReadFile</span><span class="token punctuation">(</span>filename <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    f<span class="token punctuation">,</span> err <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err
+    <span class="token punctuation">}</span>
+    <span class="token keyword">defer</span> f<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">// It's a good but not certain bet that FileInfo will tell us exactly how much to</span>
+    <span class="token comment" spellcheck="true">// read, so let's try it but be prepared for the answer to be wrong.</span>
+    <span class="token keyword">var</span> n <span class="token builtin">int64</span> <span class="token operator">=</span> bytes<span class="token punctuation">.</span>MinRead
+
+    <span class="token keyword">if</span> fi<span class="token punctuation">,</span> err <span class="token operator">:=</span> f<span class="token punctuation">.</span><span class="token function">Stat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//根据文件的大小设置缓存大小。</span>
+        <span class="token keyword">if</span> size <span class="token operator">:=</span> fi<span class="token punctuation">.</span><span class="token function">Size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> bytes<span class="token punctuation">.</span>MinRead<span class="token punctuation">;</span> size <span class="token operator">></span> n <span class="token punctuation">{</span>
+            n <span class="token operator">=</span> size
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">readAll</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h5 id="0x02-ioutil-readAll"><a href="#0x02-ioutil-readAll" class="headerlink" title="0x02 ioutil.readAll()"></a>0x02 ioutil.readAll()</h5><blockquote>
+<p>前面两个函数本质都是调用了<code>ioutil.readAll()</code>函数，因此重点分析该函数。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// readAll reads from r until an error or EOF and returns the data it read</span>
+<span class="token comment" spellcheck="true">// from the internal buffer allocated with a specified capacity.</span>
+<span class="token keyword">func</span> <span class="token function">readAll</span><span class="token punctuation">(</span>r io<span class="token punctuation">.</span>Reader<span class="token punctuation">,</span> capacity <span class="token builtin">int64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//借助bytes.Buffer实现缓存功能,详情见下文第四节。</span>
+    <span class="token keyword">var</span> buf bytes<span class="token punctuation">.</span>Buffer
+    。。。。。。
+    <span class="token keyword">if</span> <span class="token function">int64</span><span class="token punctuation">(</span><span class="token function">int</span><span class="token punctuation">(</span>capacity<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> capacity <span class="token punctuation">{</span>
+        buf<span class="token punctuation">.</span><span class="token function">Grow</span><span class="token punctuation">(</span><span class="token function">int</span><span class="token punctuation">(</span>capacity<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//分配缓存大小</span>
+    <span class="token punctuation">}</span>
+    <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">ReadFrom</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">Bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> err
+<span class="token punctuation">}</span></code></pre>
+<p>自己编写实现了<code>io.Reader</code>接口，用来测试的代码。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"io"</span>
+    <span class="token string">"io/ioutil"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> test <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>t <span class="token operator">*</span>test<span class="token punctuation">)</span> <span class="token function">Read</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> io<span class="token punctuation">.</span>EOF
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">copy</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> t<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        t<span class="token punctuation">.</span>data <span class="token operator">=</span> t<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        n <span class="token operator">=</span> <span class="token function">copy</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> t<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        t<span class="token punctuation">.</span>data <span class="token operator">=</span> t<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> n<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    r <span class="token operator">:=</span> <span class="token operator">&amp;</span>test<span class="token punctuation">{</span>
+        data<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+
+    d<span class="token punctuation">,</span> err <span class="token operator">:=</span> ioutil<span class="token punctuation">.</span><span class="token function">ReadAll</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="四、bytes-Buffer"><a href="#四、bytes-Buffer" class="headerlink" title="四、bytes.Buffer"></a>四、bytes.Buffer</h2><blockquote>
+<p><code>bytes.Buffer</code>实现了缓存功能。</p>
+</blockquote>
+<pre class=" language-Go"><code class="language-Go">type Buffer struct {
+    buf      []byte // contents are the bytes buf[off : len(buf)]
+    off      int    // read at &buf[off], write at &buf[len(buf)]
+    lastRead readOp // last read operation, so that Unread* can work correctly.
+}
+
+func NewBuffer(buf []byte) *Buffer { return &Buffer{buf: buf} }
+
+// 读取传入的io.Reader中的全部数据到缓存，缓存大小会根据数据量不断进行扩容。
+func (b *Buffer) ReadFrom(r io.Reader) (n int64, err error) {
+    b.lastRead = opInvalid
+    for {
+        i := b.grow(MinRead)  //对缓存进行扩容
+        b.buf = b.buf[:i]
+        m, e := r.Read(b.buf[i:cap(b.buf)])  //读取数据到缓存
+        if m < 0 {
+            panic(errNegativeRead)
+        }
+
+        b.buf = b.buf[:i+m]
+        n += int64(m)
+        if e == io.EOF {
+            return n, nil // e is EOF, so return nil explicitly
+        }
+        if e != nil {
+            return n, e
+        }
+    }
+}
+
+//从缓存中读取数据。
+func (b *Buffer) Read(p []byte) (n int, err error) {
+    b.lastRead = opInvalid
+    if b.empty() {
+        // Buffer is empty, reset to recover space.
+        b.Reset()
+        if len(p) == 0 {
+            return 0, nil
+        }
+        return 0, io.EOF
+    }
+    n = copy(p, b.buf[b.off:])
+    b.off += n
+    if n > 0 {
+        b.lastRead = opRead
+    }
+    return n, nil
+}</code></pre>
+<h2 id="五、bufio"><a href="#五、bufio" class="headerlink" title="五、bufio"></a>五、bufio</h2><blockquote>
+<p>Package bufio implements buffered I/O. It wraps an io.Reader or io.Writer object。</p>
+</blockquote>
+<h5 id="0x00-bufio-Reader"><a href="#0x00-bufio-Reader" class="headerlink" title="0x00 bufio.Reader"></a>0x00 bufio.Reader</h5><blockquote>
+<p><code>bufio.Reader</code>用于对<code>io.Reader</code>进行二次封装实现缓存。</p>
+<p>与上面的<code>bytes.Bufferchuan</code>区别在于，<code>bufio.Reader</code>是对<code>io.Reader</code>封装，而<code>bytes.Buffer</code>是传入<code>io.Reader</code>到<code>ReadFrom</code>方法。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Reader <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    buf          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span>
+    rd           io<span class="token punctuation">.</span>Reader <span class="token comment" spellcheck="true">// reader provided by the client</span>
+    r<span class="token punctuation">,</span> w         <span class="token builtin">int</span>       <span class="token comment" spellcheck="true">// buf read and write positions</span>
+    err          <span class="token builtin">error</span>
+    lastByte     <span class="token builtin">int</span> <span class="token comment" spellcheck="true">// last byte read for UnreadByte; -1 means invalid</span>
+    lastRuneSize <span class="token builtin">int</span> <span class="token comment" spellcheck="true">// size of last rune read for UnreadRune; -1 means invalid</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 构造方法，将传入的iO.Reader封装到bufio.Reader中。</span>
+<span class="token keyword">func</span> <span class="token function">NewReaderSize</span><span class="token punctuation">(</span>rd io<span class="token punctuation">.</span>Reader<span class="token punctuation">,</span> size <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">*</span>Reader <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 如果传入的io.Reader已经是bufio.Reader，那么只需要设置缓存大小即可。</span>
+    b<span class="token punctuation">,</span> ok <span class="token operator">:=</span> rd<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token operator">*</span>Reader<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ok <span class="token operator">&amp;&amp;</span> <span class="token function">len</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>buf<span class="token punctuation">)</span> <span class="token operator">>=</span> size <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> b
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> size <span class="token operator">&lt;</span> minReadBufferSize <span class="token punctuation">{</span>
+        size <span class="token operator">=</span> minReadBufferSize
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 如果传入的io.Reader不是bufio.Reader，就实例化一个bufio.Reader并设置缓存大小。</span>
+    r <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>Reader<span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">,</span> rd<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> r
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 实现了使用默认大小缓存的构造方法</span>
+<span class="token keyword">func</span> <span class="token function">NewReader</span><span class="token punctuation">(</span>rd io<span class="token punctuation">.</span>Reader<span class="token punctuation">)</span> <span class="token operator">*</span>Reader <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">NewReaderSize</span><span class="token punctuation">(</span>rd<span class="token punctuation">,</span> defaultBufSize<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>b <span class="token operator">*</span>Reader<span class="token punctuation">)</span> <span class="token function">Read</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    n <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> b<span class="token punctuation">.</span><span class="token function">Buffered</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//Buffered()返回当前缓存中可读取的数据的长度。</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span><span class="token function">readErr</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> b<span class="token punctuation">.</span>r <span class="token operator">==</span> b<span class="token punctuation">.</span>w <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//读取位置等于写入位置，意味着当前缓存中已无未读取的数据。</span>
+        <span class="token keyword">if</span> b<span class="token punctuation">.</span>err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span><span class="token function">readErr</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token function">len</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>buf<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//要读取的数据长度大于缓存的长度则直接从io.Reader中读取，而不从缓存中读取。</span>
+            <span class="token comment" spellcheck="true">// Large read, empty buffer.</span>
+            <span class="token comment" spellcheck="true">// Read directly into p to avoid copy.</span>
+            n<span class="token punctuation">,</span> b<span class="token punctuation">.</span>err <span class="token operator">=</span> b<span class="token punctuation">.</span>rd<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> n <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+                <span class="token function">panic</span><span class="token punctuation">(</span>errNegativeRead<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> n <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>
+                b<span class="token punctuation">.</span>lastByte <span class="token operator">=</span> <span class="token function">int</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>n<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                b<span class="token punctuation">.</span>lastRuneSize <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> n<span class="token punctuation">,</span> b<span class="token punctuation">.</span><span class="token function">readErr</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// One read.</span>
+        <span class="token comment" spellcheck="true">// Do not use b.fill, which will loop.</span>
+        b<span class="token punctuation">.</span>r <span class="token operator">=</span> <span class="token number">0</span>
+        b<span class="token punctuation">.</span>w <span class="token operator">=</span> <span class="token number">0</span>
+        n<span class="token punctuation">,</span> b<span class="token punctuation">.</span>err <span class="token operator">=</span> b<span class="token punctuation">.</span>rd<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>buf<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> n <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span>errNegativeRead<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span><span class="token function">readErr</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        b<span class="token punctuation">.</span>w <span class="token operator">+=</span> n
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// copy as much as we can</span>
+    n <span class="token operator">=</span> <span class="token function">copy</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> b<span class="token punctuation">.</span>buf<span class="token punctuation">[</span>b<span class="token punctuation">.</span>r<span class="token punctuation">:</span>b<span class="token punctuation">.</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span>r <span class="token operator">+=</span> n
+    b<span class="token punctuation">.</span>lastByte <span class="token operator">=</span> <span class="token function">int</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>buf<span class="token punctuation">[</span>b<span class="token punctuation">.</span>r<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span>lastRuneSize <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+    <span class="token keyword">return</span> n<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="六、strings-Reader"><a href="#六、strings-Reader" class="headerlink" title="六、strings.Reader"></a>六、strings.Reader</h2><blockquote>
+<p>实现了将字符串作为数据源的<code>io.Reader</code>。</p>
+</blockquote>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Reader <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    s        <span class="token builtin">string</span>
+    i        <span class="token builtin">int64</span> <span class="token comment" spellcheck="true">// current reading index</span>
+    prevRune <span class="token builtin">int</span>   <span class="token comment" spellcheck="true">// index of previous rune; or &lt; 0</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">NewReader</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">*</span>Reader <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token operator">&amp;</span>Reader<span class="token punctuation">{</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>Reader<span class="token punctuation">)</span> <span class="token function">Read</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> r<span class="token punctuation">.</span>i <span class="token operator">>=</span> <span class="token function">int64</span><span class="token punctuation">(</span><span class="token function">len</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> io<span class="token punctuation">.</span>EOF
+    <span class="token punctuation">}</span>
+    r<span class="token punctuation">.</span>prevRune <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+    n <span class="token operator">=</span> <span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> r<span class="token punctuation">.</span>s<span class="token punctuation">[</span>r<span class="token punctuation">.</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>i <span class="token operator">+=</span> <span class="token function">int64</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">}</span></code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">a4ua</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://a4ua.github.io/2020/10/15/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94IO/">http://a4ua.github.io/2020/10/15/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94IO/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">a4ua</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                                    <span class="chip bg-color">Go基础知识</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'lE2fTHGggXYwAQMOeCpNVfef-gzGzoHsz',
+        appKey: '0wd5OTGOTsbq0UF9Rx3FHmQu',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/10/15/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94IO/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Golang学习之路—IO">
+                        
+                        <span class="card-title">Golang学习之路—IO</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/14/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%87%BD%E6%95%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang学习之路—函数">
+                        
+                        <span class="card-title">Golang学习之路—函数</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">a4ua</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">18.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "09";
+                    var startDate = "21";
+                    var startHour = "21";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/a4ua" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
