@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BlueCMS功能点实现代码逻辑, a4ua">
+    <meta name="keywords" content="SSH隧道总结, a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>BlueCMS功能点实现代码逻辑 | a4ua</title>
+    <title>SSH隧道总结 | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -606,12 +606,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">BlueCMS功能点实现代码逻辑</h1>
+                    <h1 class="description center-align post-title">SSH隧道总结</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/BlueCMS/">
-                                <span class="chip bg-color">BlueCMS</span>
+                            <a href="/tagsio/SSH-Tunnel/">
+                                <span class="chip bg-color">SSH Tunnel</span>
                             </a>
                         
                     </div>
@@ -740,8 +740,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/PHP/" class="post-category">
-                                PHP
+                            <a href="/categories/Penetration-Testing/" class="post-category">
+                                Penetration Testing
                             </a>
                         
                     </div>
@@ -753,28 +753,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    281
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 
@@ -789,42 +789,185 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="新闻列表"><a href="#新闻列表" class="headerlink" title="新闻列表"></a>新闻列表</h2><p>如下图，首页上的新闻列表。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923095406406.png" alt="image-20200923095406406" style="zoom:50%;">
+                <h5 id="SSH隧道可以分为三种："><a href="#SSH隧道可以分为三种：" class="headerlink" title="SSH隧道可以分为三种："></a><strong>SSH隧道可以分为三种：</strong></h5><ul>
+<li>本地转发（Local SSH tunneling）</li>
+<li>动态转发（Dynamic SSH tunneling）</li>
+<li>远程转发（Remote SSH tunneling）</li>
+</ul>
+<h5 id="本地转发"><a href="#本地转发" class="headerlink" title="本地转发"></a><strong>本地转发</strong></h5><img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029211522167.png" alt="image-20201029211522167" style="zoom: 67%;">
 
-<p><strong>实现逻辑</strong></p>
+<p>环境描述</p>
 <blockquote>
-<p>从存放新闻的数据库表中获取数据，上图不同的框注的部分实际只是在进行SQL查询时，语句过滤的条件不同而已。之后将查询到的所有新闻数据传给模板语言，模板语言循环传入的数据并渲染显示内容（文章URL、文章标题）。</p>
+<p><code>Win10（192.168.31.251）</code> 无法直接访问 <code>CentOS(192.168.248.133)</code>。</p>
+<p><code>Win10（192.168.31.251）</code> 可以直接访问 <code>Kali(192.168.31.138)</code>。</p>
+<p><code>Kali(192.168.248.130)</code>    可以直接访问 <code>CentOS(192.168.248.133)</code>。</p>
 </blockquote>
-<p>每篇文章一般会使用不同的<code>id</code>参数标识。形如：<code>news.php?id=1</code></p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923105348921.png" alt="image-20200923105348921" style="zoom:50%;">
+<p>现在<code>Win10</code>想要SSH到<code>CentOS</code>，可以通过本地转发隧道实现。</p>
+<p>在<code>Win10</code>主机中打开<code>Powershell</code>输入：</p>
+<ul>
+<li><code>ssh  -L 9999:192.168.248.133:22  kali@192.168.31.138</code></li>
+</ul>
+<p>执行上面的命令后，<code>Win10</code>主机会与<code>Kali</code>主机建立一条隧道，并且<code>Win10</code>主机会监听<code>127.0.0.1:9999</code>，发往该监听地址的数据都会先通过隧道发到<code>Kali</code>主机，然后<code>Kali</code>主机会再发往<code>CentOS</code>主机。</p>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029214403140.png" alt="image-20201029214403140" style="zoom:67%;">
 
-<p>存放新闻的数据表:</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100515760.png" alt="image-20200923100515760" style="zoom: 40%;">
+<p>本地转发使用<code>-L</code>参数</p>
+<ul>
+<li><p><code>-L [bind_address:]port:host:hostport</code></p>
+</li>
+<li><p><code>-L [bind_address:]port:remote_socket</code></p>
+</li>
+<li><p><code>-L local_socket:host:hostport</code></p>
+</li>
+<li><p><code>-L local_socket:remote_socket</code></p>
+<pre><code>             Specifies that connections to the given TCP port or Unix
+             socket on the local (client) host are to be forwarded to the
+             given host and port, or Unix socket, on the remote side.
+             This works by allocating a socket to listen to either a TCP
+             port on the local side, optionally bound to the specified
+             bind_address, or to a Unix socket.  Whenever a connection is
+             made to the local port or socket, the connection is for‐
+             warded over the secure channel, and a connection is made to
+             either host port hostport, or the Unix socket remote_socket,
+             from the remote machine.
 
-<p>查询数据并传给模板语言：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923100758860.png" alt="image-20200923100758860" style="zoom:50%;">
+             Port forwardings can also be specified in the configuration
+             file.  Only the superuser can forward privileged ports.
+             IPv6 addresses can be specified by enclosing the address in
+             square brackets.
 
-<p>模板循环数据进行渲染：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923101019763.png" alt="image-20200923101019763" style="zoom: 50%;">
+             By default, the local port is bound in accordance with the
+             GatewayPorts setting.  However, an explicit bind_address may
+             be used to bind the connection to a specific address.  The
+             bind_address of “localhost” indicates that the listening
+             port be bound for local use only, while an empty address or
+             ‘*’ indicates that the port should be available from all in‐
+             terfaces.</code></pre>
+</li>
+</ul>
+<h4 id="动态转发"><a href="#动态转发" class="headerlink" title="动态转发"></a><strong>动态转发</strong></h4><p>动态转发与本地转发的唯一区别在于，动态转发可以转发所有地址的所有TCP的流量，而本地转发只能转发某个地址的某个TCP端口的流量。</p>
+<p>动态转发跟平时用的代理比较接近的，想要使用隧道就配置应用的代理即可。</p>
+<p>依旧使用本地转发小节中的环境。在<code>Win10</code>中想要访问<code>CentOS</code>的HTTP服务，同时也想SSH到<code>CentOS</code>主机。</p>
+<p>在<code>Win10</code>主机中打开<code>Powershell</code>输入：</p>
+<ul>
+<li><code>ssh -D 9999 kali@192.168.31.138</code></li>
+</ul>
+<p>执行上面的命令后，<code>Win10</code>主机会与<code>Kali</code>主机建立一条隧道，并且<code>Win10</code>主机会监听<code>127.0.0.1:9999</code>，发往该监听地址的数据都会先通过隧道发到<code>Kali</code>主机，然后<code>Kali</code>主机会再发往任意主机。</p>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029221043125.png" alt="image-20201029221043125" style="zoom:67%;">
 
-<h5 id="文章分类页"><a href="#文章分类页" class="headerlink" title="文章分类页"></a><strong>文章分类页</strong></h5><p>文章分类页同理，只不过是根据文章表的<code>cid</code>字段，即分类字段进行过滤查询结果。</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923111410133.png" alt="image-20200923111410133" style="zoom:40%;">
+<p>接下来设置浏览器的代理服务器为<code>127.0.0.1:9999</code>，代理类型为<code>socks</code>。</p>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029221226695.png" alt="image-20201029221226695" style="zoom:50%;">
 
-<h2 id="导航条"><a href="#导航条" class="headerlink" title="导航条"></a>导航条</h2><img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923112411381.png" alt="image-20200923112411381" style="zoom:50%;">
+<p>然后直接<code>CentOS</code>主机的Web服务，成功访问。</p>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029222718712.png" alt="image-20201029222718712" style="zoom:50%;">
 
-<p><strong>实现逻辑</strong></p>
+<p>此时，不止可以访问<code>CentOS</code>的任意服务，只要是<code>Kali</code>主机能访问的所有地址的所有服务都可以通过设置代理让<code>Win10</code>访问到。</p>
+<p>动态转发使用<code>-D</code>参数</p>
+<ul>
+<li><p><code>-D [bind_address:]port</code></p>
+<pre><code>             Specifies a local “dynamic” application-level port forward‐
+             ing.  This works by allocating a socket to listen to port on
+             the local side, optionally bound to the specified
+             bind_address.  Whenever a connection is made to this port,
+             the connection is forwarded over the secure channel, and the
+             application protocol is then used to determine where to con‐
+             nect to from the remote machine.  Currently the SOCKS4 and
+             SOCKS5 protocols are supported, and ssh will act as a SOCKS
+             server.  Only root can forward privileged ports.  Dynamic
+             port forwardings can also be specified in the configuration
+             file.
+
+             IPv6 addresses can be specified by enclosing the address in
+             square brackets.  Only the superuser can forward privileged
+             ports.  By default, the local port is bound in accordance
+             with the GatewayPorts setting.  However, an explicit
+             bind_address may be used to bind the connection to a spe‐
+             cific address.  The bind_address of “localhost” indicates
+             that the listening port be bound for local use only, while
+             an empty address or ‘*’ indicates that the port should be
+             available from all interfaces.
+</code></pre>
+</li>
+</ul>
+<h4 id="远程转发"><a href="#远程转发" class="headerlink" title="远程转发"></a><strong>远程转发</strong></h4><img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029225408658.png" alt="image-20201029225408658" style="zoom:67%;">
+
+<p>环境描述</p>
 <blockquote>
-<p>将导航条各个菜单项的信息存储到数据库的一个表中，在显示页面时将其从数据库中读出传给模板引擎进行渲染。</p>
+<p><code>Ubuntu（192.168.31.8）</code> 无法直接访问 <code>CentOS(192.168.248.133)</code>。</p>
+<p><code>Ubuntu（192.168.31.8）</code> 无法直接访问 <code>Kali(192.168.31.138)</code>。</p>
+<p><code>Kali(192.168.248.130)</code>    可以直接访问 <code>CentOS(192.168.248.133)</code>。</p>
+<p><code>Kali(192.168.248.130)</code>    可以直接访问 <code>Ubuntu（192.168.31.8）</code>。</p>
 </blockquote>
-<p>存放菜单项的数据表：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/image-20200923113839727.png" alt="image-20200923113839727" style="zoom:50%;">
+<p><code>Ubuntu</code>想要访问<code>CentOS</code>,由于<code>Ubuntu</code>无法主动访问<code>Kali</code>，因此只能采用远程转发。</p>
+<p>在<code>Kali</code>主机中执行：</p>
+<ul>
+<li><code>ssh -R 9999:192.168.248.133:22 a4ua@192.168.31.8</code></li>
+</ul>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029230143234.png" alt="image-20201029230143234" style="zoom: 67%;">
 
-<p>从数据库中查询：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="img" style="zoom:40%;">
+<p>执行上面的命令后，<code>Kali</code>主机会与<code>Ubuntu</code>主机建立一条隧道，并且<code>Ubuntu</code>主机会监听<code>127.0.0.1:9999</code>(注意，远程转发与本地转发的区别就在于这里，<code>-R</code>参数是远程的主机会开启监听。)，发往该监听地址的数据都会先通过隧道发到<code>Kali</code>主机，然后<code>Kali</code>主机会再发往任意主机。</p>
+<p>在<code>ubuntu</code>中ssh连接到<code>127.0.0.1:9999</code>就会被<code>Kali</code>主机转发到<code>CentOS</code>。</p>
+<img src="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/image-20201029230710347.png" alt="image-20201029230710347" style="zoom:67%;">
 
-<p>传到页面进行渲染显示：</p>
-<img src="/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/Untitled.png" alt="Untitled.png (1699×376)" style="zoom:40%;">
+<p>远程转发使用<code>-D</code>参数</p>
+<ul>
+<li><p><code> -R [bind_address:]port:host:hostport</code></p>
+</li>
+<li><p><code>-R [bind_address:]port:local_socket</code></p>
+</li>
+<li><p><code> -R remote_socket:host:hostport</code></p>
+</li>
+<li><p><code>-R remote_socket:local_socket</code></p>
+</li>
+<li><p><code>-R [bind_address:]port</code></p>
+<pre><code>         Specifies that connections to the given TCP port or Unix
+         socket on the remote (server) host are to be forwarded to
+         the local side.
+
+         This works by allocating a socket to listen to either a TCP
+         port or to a Unix socket on the remote side.  Whenever a
+         connection is made to this port or Unix socket, the connec‐
+         tion is forwarded over the secure channel, and a connection
+         is made from the local machine to either an explicit desti‐
+         nation specified by host port hostport, or local_socket, or,
+         if no explicit destination was specified, ssh will act as a
+         SOCKS 4/5 proxy and forward connections to the destinations
+         requested by the remote SOCKS client.
+
+         Port forwardings can also be specified in the configuration
+         file.  Privileged ports can be forwarded only when logging
+         in as root on the remote machine.  IPv6 addresses can be
+         specified by enclosing the address in square brackets.
+
+         By default, TCP listening sockets on the server will be
+         bound to the loopback interface only.  This may be overrid‐
+         den by specifying a bind_address.  An empty bind_address, or
+         the address ‘*’, indicates that the remote socket should
+         listen on all interfaces.  Specifying a remote bind_address
+         will only succeed if the server&#39;s GatewayPorts option is en‐
+         abled (see sshd_config(5)).
+
+         If the port argument is ‘0’, the listen port will be dynami‐
+         cally allocated on the server and reported to the client at
+         run time.  When used together with -O forward the allocated
+         port will be printed to the standard output.</code></pre>
+</li>
+</ul>
+<p><strong>远程动态转发</strong></p>
+<p>当使用<code>-R</code>参数时，仅指定远程主机监听的端口，而不指定目标主机的IP和端口时，就是远程动态转发。</p>
+<ul>
+<li><code>ssh -R 9999 a4ua@192.168.31.8</code></li>
+</ul>
+<h4 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a><strong>通用参数</strong></h4><ul>
+<li><code>-f </code>:  后台运行进程。(避免关闭Terminal后连接就中断了)</li>
+<li><code>-N</code> : 不返回SSH登录后的<code>Shell</code>。</li>
+<li><code>-C</code> : 进行压缩，节约带宽。</li>
+<li><code>-g</code> : 默认监听<code>127.0.0.1</code>，使用该参数后监听<code>0.0.0.0</code>。        </li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h4><ul>
+<li>本地转发和远程转发都可以有动态转发的形式。</li>
+<li>本地转发类似普通的代理。动态转发可用于科学上网。远程转发用于内网穿透。</li>
+</ul>
+
             </div>
             <hr/>
 
@@ -849,7 +992,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/">http://a4ua.github.io/2020/09/23/BlueCMS%E5%8A%9F%E8%83%BD%E7%82%B9%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91/</a>
+                    <a href="http://a4ua.github.io/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/">http://a4ua.github.io/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -887,8 +1030,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/BlueCMS/">
-                                    <span class="chip bg-color">BlueCMS</span>
+                                <a href="/tagsio/SSH-Tunnel/">
+                                    <span class="chip bg-color">SSH Tunnel</span>
                                 </a>
                             
                         </div>
@@ -1190,17 +1333,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/12/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%AE%B9%E5%99%A8%EF%BC%88%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87%E3%80%81%E6%98%A0%E5%B0%84%EF%BC%89/">
+                <a href="/2020/10/29/SSH%E9%9A%A7%E9%81%93%E6%80%BB%E7%BB%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Golang学习之路—容器（数组、切片、映射）">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="SSH隧道总结">
                         
-                        <span class="card-title">Golang学习之路—容器（数组、切片、映射）</span>
+                        <span class="card-title">SSH隧道总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1210,9 +1354,59 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-12
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Penetration-Testing/" class="post-category">
+                                    Penetration Testing
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/SSH-Tunnel/">
+                        <span class="chip bg-color">SSH Tunnel</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/29/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94errors/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Golang学习之路—errors">
+                        
+                        <span class="card-title">Golang学习之路—errors</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1228,61 +1422,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                        <span class="chip bg-color">Go基础知识</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/09/22/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98%E2%80%94BlueCMS/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="代码审计入门实战—BlueCMS">
-                        
-                        <span class="card-title">代码审计入门实战—BlueCMS</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    代码审计
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tagsio/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">PHP代码审计</span>
-                    </a>
-                    
-                    <a href="/tagsio/BlueCMS/">
-                        <span class="chip bg-color">BlueCMS</span>
+                    <a href="/tagsio/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">Go语言基础</span>
                     </a>
                     
                 </div>
