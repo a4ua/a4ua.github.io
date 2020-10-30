@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Go学习之路—流程控制, a4ua">
+    <meta name="keywords" content="Go Package—net\http(Part I：Client), a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Go学习之路—流程控制 | a4ua</title>
+    <title>Go Package—net\http(Part I：Client) | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -606,12 +606,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Go学习之路—流程控制</h1>
+                    <h1 class="description center-align post-title">Go Package—net\http(Part I：Client)</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                                <span class="chip bg-color">Go基础知识</span>
+                            <a href="/tagsio/net-http/">
+                                <span class="chip bg-color">net\http</span>
+                            </a>
+                        
+                            <a href="/tagsio/http-Client/">
+                                <span class="chip bg-color">http Client</span>
                             </a>
                         
                     </div>
@@ -753,28 +757,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-13
+                    2020-10-30
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-10-13
+                    2020-10-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    368
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -789,93 +793,180 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、分支结构（if…else…）"><a href="#一、分支结构（if…else…）" class="headerlink" title="一、分支结构（if…else…）"></a>一、分支结构（if…else…）</h2><ul>
-<li><p>条件不需要括号括起来。</p>
-</li>
-<li><p><code>else</code>或<code>else-if</code>必须紧接<code> }</code> 之后，不能另起。</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">if</span> a <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"Mikasa"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> a <span class="token operator">==</span> <span class="token number">2</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"Yuigahama"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"Toka"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-</li>
-<li><p><code>if</code>语句可以在进入条件判断前，先执行语句：</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">if</span> a <span class="token operator">:=</span> <span class="token number">5</span> <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">;</span> a <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//a变量的作用域只在该if代码块，执行完if便销毁</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"zzzzz"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"ccccc"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-</li>
-</ul>
-<h2 id="二、循环结构（for）"><a href="#二、循环结构（for）" class="headerlink" title="二、循环结构（for）"></a>二、循环结构（for）</h2><ul>
-<li><p>Go语言只有<code>for</code>语句用于循环，没有<code>while</code>及<code>do…while</code>。</p>
-</li>
-<li><p><code>break</code>语句可以结束<code>for</code>、<code>switch</code>和<code>select</code>的代码块。</p>
-</li>
-<li><p><code>continue</code>语句可以结束当前循环，开始下一次的循环迭代过程，仅限在<code>for</code>循环内使用。</p>
-</li>
-<li><p>for循环可以类似C语言写法，但是条件语句不用<code>（）</code>括起来:</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-</li>
-<li><p>无限循环，相当于<code>while 1</code>：</p>
-<pre class=" language-go"><code class="language-go">count <span class="token operator">:=</span> <span class="token number">0</span>
+                <h2 id="一、http-Client"><a href="#一、http-Client" class="headerlink" title="一、http.Client"></a>一、http.Client</h2><p><code>net\http</code>包提供<code>Client</code>结构体来实现<code>HTTP</code>客户端功能。</p>
+<p><strong>Transport</strong></p>
+<p><code>Transport</code>是真正用于网络通信的，包括建立<code>TCP</code>连接、建立<code>TLS</code>连接、发送HTTP Request等。</p>
+<p>通常<code>Transport</code>都实现了<code>TCP</code>链接缓存功能，因此应该重用一个<code>Client</code>，而不是每发一个HTTP Request都要创建一个<code>Client</code>。</p>
+<p><code>Client</code>是线程安全的，不用担心多个<code>goroutine</code>使用同一个<code>Client</code>会造成问题。</p>
+<p><strong>CheckRedirct</strong></p>
+<p><code>CheckRedirect</code>用来处理重定向跳转的情况，在进行重定向前，该函数会被调用。</p>
+<p><strong>Jar</strong></p>
+<p><code>Jar</code>用于处理<code>Cookie</code>，包括在发送HTTP Reuqest时插入对应的<code>Cookie</code>,以及存储更新<code>HTTP Response</code>返回的<code>Set-Cookie</code>的值。</p>
+<p><strong>Timeout</strong></p>
+<p><code>Timeout</code>用于设置超时时间。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Client <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Transport specifies the mechanism by which individual HTTP requests are made.</span>
+    <span class="token comment" spellcheck="true">// If nil, DefaultTransport is used.</span>
+    Transport RoundTripper
 
-<span class="token keyword">for</span> <span class="token punctuation">{</span>
-    count<span class="token operator">++</span>
-    <span class="token keyword">if</span> count <span class="token operator">&lt;</span> <span class="token number">5</span> <span class="token punctuation">{</span>
-        fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        <span class="token keyword">break</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-</li>
-<li><p>省略初始化语句、循环结束执行的语句，就可以当作<code>if</code>使用：</p>
-<pre class=" language-go"><code class="language-go">count <span class="token operator">:=</span> <span class="token number">4</span>
+    <span class="token comment" spellcheck="true">// CheckRedirect specifies the policy for handling redirects.</span>
+    <span class="token comment" spellcheck="true">// If CheckRedirect is not nil, the client calls it before following an HTTP redirect. </span>
+    <span class="token comment" spellcheck="true">// The arguments req and via are the upcoming request and the requests made already, oldest first. </span>
+    <span class="token comment" spellcheck="true">// If CheckRedirect is nil, the Client uses its default policy,which is to stop after 10 consecutive requests.</span>
+    CheckRedirect <span class="token keyword">func</span><span class="token punctuation">(</span>req <span class="token operator">*</span>Request<span class="token punctuation">,</span> via <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Request<span class="token punctuation">)</span> <span class="token builtin">error</span>
 
-<span class="token keyword">for</span> count <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Tosaki"</span><span class="token punctuation">)</span>
-    count<span class="token operator">--</span>
-<span class="token punctuation">}</span></code></pre>
-</li>
-<li><p>练习：9*9乘法表</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">for</span> x <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> x <span class="token operator">&lt;=</span> <span class="token number">9</span><span class="token punctuation">;</span> x<span class="token operator">++</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Jar specifies the cookie jar.</span>
+    <span class="token comment" spellcheck="true">// The Jar is used to insert relevant cookies into every</span>
+    <span class="token comment" spellcheck="true">// outbound Request and is updated with the cookie values</span>
+    <span class="token comment" spellcheck="true">// of every inbound Response.</span>
+    <span class="token comment" spellcheck="true">// The Jar is consulted for every redirect that the Client follows.</span>
+    <span class="token comment" spellcheck="true">// If Jar is nil, cookies are only sent if they are explicitly set on the Request.</span>
+    Jar CookieJar
 
-    <span class="token keyword">for</span> y <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> y <span class="token operator">&lt;=</span> x<span class="token punctuation">;</span> y<span class="token operator">++</span> <span class="token punctuation">{</span>
-        fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%d*%d=%d "</span><span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> x<span class="token operator">*</span>y<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">// Timeout specifies a time limit for requests made by this Client. </span>
+    <span class="token comment" spellcheck="true">// The timeout includes connection time, any redirects, and reading the response body. </span>
+    <span class="token comment" spellcheck="true">// The timer remains running after Get, Head, Post, or Do return and will interrupt reading of the Response.Body.</span>
+    <span class="token comment" spellcheck="true">// A Timeout of zero means no timeout.</span>
+    Timeout time<span class="token punctuation">.</span>Duration
 <span class="token punctuation">}</span></code></pre>
-</li>
-<li><p><strong>Go语言中可以使用 for range 遍历数组、切片、字符串、map 及通道（channel）。</strong></p>
-<blockquote>
+<h4 id="http-DefaultClient"><a href="#http-DefaultClient" class="headerlink" title="http.DefaultClient"></a>http.DefaultClient</h4><p><code>http.DefaultClient</code>是<code>http</code>包提供的默认的<code>Client</code>，<code>http.Get()</code>、<code>http.Post()</code>、<code>http.PostForm()</code>、<code>http.Head()</code>都是基于该默认结构体发送HTTP Request。</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// DefaultClient is the default Client and is used by Get, Head, and Post.</span>
+<span class="token keyword">var</span> DefaultClient <span class="token operator">=</span> <span class="token operator">&amp;</span>Client<span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<h2 id="二、RoundTripper"><a href="#二、RoundTripper" class="headerlink" title="二、RoundTripper"></a>二、RoundTripper</h2><p><code>RoundTripper</code>是一个接口，其<code>RoundTrip()</code>方法用于建立<code>TCP</code>链接、发送<code>HTTP Request</code>返回<code>HTTP Response</code>等。</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// RoundTripper is an interface representing the ability to execute a</span>
+<span class="token comment" spellcheck="true">// single HTTP transaction, obtaining the Response for a given Request.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// A RoundTripper must be safe for concurrent use by multiple goroutines.</span>
+<span class="token keyword">type</span> RoundTripper <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// RoundTrip executes a single HTTP transaction, returning</span>
+    <span class="token comment" spellcheck="true">// a Response for the provided Request.</span>
+    <span class="token function">RoundTrip</span><span class="token punctuation">(</span><span class="token operator">*</span>Request<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Response<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="http-Transport"><a href="#http-Transport" class="headerlink" title="http.Transport"></a><strong>http.Transport</strong></h4><p><code>http.Transport</code>是<code>http</code>包提供的一个实现了<code>RoundTripper</code>接口的结构体。</p>
+<p>我们可以使用该结构体定制化<code>HTTP</code>链接，如<code>HTTP</code>连接数、<code>TLS</code>、<code>HTTP</code>代理等,并在实例化<code>Client</code>时传入。。</p>
+<p><code>http</code>包同时也提供了默认的<code>DefaultTransport</code>，主要用于默认的<code>DefaultClient</code>使用。</p>
+<pre class=" language-go"><code class="language-go">
+<span class="token comment" spellcheck="true">// DefaultTransport is the default implementation of Transport and is used by DefaultClient. </span>
+<span class="token keyword">var</span> DefaultTransport RoundTripper <span class="token operator">=</span> <span class="token operator">&amp;</span>Transport<span class="token punctuation">{</span>
+    Proxy<span class="token punctuation">:</span> ProxyFromEnvironment<span class="token punctuation">,</span>
+    DialContext<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>net<span class="token punctuation">.</span>Dialer<span class="token punctuation">{</span>
+        Timeout<span class="token punctuation">:</span>   <span class="token number">30</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">,</span>
+        KeepAlive<span class="token punctuation">:</span> <span class="token number">30</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">,</span>
+        DualStack<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>DialContext<span class="token punctuation">,</span>
+    ForceAttemptHTTP2<span class="token punctuation">:</span>     <span class="token boolean">true</span><span class="token punctuation">,</span>
+    MaxIdleConns<span class="token punctuation">:</span>          <span class="token number">100</span><span class="token punctuation">,</span>
+    IdleConnTimeout<span class="token punctuation">:</span>       <span class="token number">90</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">,</span>
+    TLSHandshakeTimeout<span class="token punctuation">:</span>   <span class="token number">10</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">,</span>
+    ExpectContinueTimeout<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="三、CookieJar"><a href="#三、CookieJar" class="headerlink" title="三、CookieJar"></a>三、CookieJar</h2><p><code>CookieJar</code>主要用于存取<code>Cookie</code>，其内部使用嵌套的<code>map</code>来存储<code>Cookie</code>。</p>
 <ul>
-<li>数组、切片、字符串返回索引和值。</li>
-<li>map 返回键和值。</li>
-<li>通道（channel）只返回通道内的值。</li>
+<li><code>map[string]map[string]Cookie</code><ul>
+<li>最外层<code>map</code>的<code>key</code>是<code>URL</code>字符串。</li>
+<li>内层<code>map</code>的<code>key</code>是<code>id</code>值。</li>
+<li>内层<code>map</code>的值是<code>Cookie</code>结构体，即一个<code>Cookie</code>键值对。</li>
 </ul>
-</blockquote>
 </li>
 </ul>
-<h2 id="三、switch"><a href="#三、switch" class="headerlink" title="三、switch"></a>三、switch</h2><pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// 代码示例：</span>
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> num <span class="token operator">*</span><span class="token builtin">int</span><span class="token operator">*</span> <span class="token operator">=</span> <span class="token number">4</span>
+<p><code>CookieJar</code>是一个接口,声明了两个方法。</p>
+<ul>
+<li><code>SetCookies()</code><ul>
+<li>提供向<code>CookieJar</code>中存储<code>Cookie</code>的接口。</li>
+</ul>
+</li>
+<li><code>Cookies()</code><ul>
+<li>提供从<code>CookieJar</code>中获取对应URL的<code>Cookie</code>键值对的接口。</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// A CookieJar manages storage and use of cookies in HTTP requests.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// Implementations of CookieJar must be safe for concurrent use by multiple goroutines.</span>
+<span class="token comment" spellcheck="true">//</span>
+<span class="token comment" spellcheck="true">// The net/http/cookiejar package provides a CookieJar implementation.</span>
+<span class="token keyword">type</span> CookieJar <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// SetCookies handles the receipt of the cookies in a reply for the</span>
+    <span class="token comment" spellcheck="true">// given URL.  It may or may not choose to save the cookies, depending</span>
+    <span class="token comment" spellcheck="true">// on the jar's policy and implementation.</span>
+    <span class="token function">SetCookies</span><span class="token punctuation">(</span>u <span class="token operator">*</span>url<span class="token punctuation">.</span>URL<span class="token punctuation">,</span> cookies <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Cookie<span class="token punctuation">)</span>
 
-    <span class="token keyword">switch</span> num <span class="token punctuation">{</span>
-        <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-        <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-
-        <span class="token keyword">default</span><span class="token punctuation">:</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"0"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// Cookies returns the cookies to send in a request for the given URL.</span>
+    <span class="token comment" spellcheck="true">// It is up to the implementation to honor the standard cookie use</span>
+    <span class="token comment" spellcheck="true">// restrictions such as in RFC 6265.</span>
+    <span class="token function">Cookies</span><span class="token punctuation">(</span>u <span class="token operator">*</span>url<span class="token punctuation">.</span>URL<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Cookie
 <span class="token punctuation">}</span></code></pre>
+<p><strong>http.Cookie</strong></p>
+<p>使用<code>Cookie</code>结构体来表示一个<code>Cookie</code>键值对。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Cookie <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Name  <span class="token builtin">string</span>
+    Value <span class="token builtin">string</span>
+
+    Path       <span class="token builtin">string</span>    <span class="token comment" spellcheck="true">// optional</span>
+    Domain     <span class="token builtin">string</span>    <span class="token comment" spellcheck="true">// optional</span>
+    Expires    time<span class="token punctuation">.</span>Time <span class="token comment" spellcheck="true">// optional</span>
+    RawExpires <span class="token builtin">string</span>    <span class="token comment" spellcheck="true">// for reading cookies only</span>
+
+    <span class="token comment" spellcheck="true">// MaxAge=0 means no 'Max-Age' attribute specified.</span>
+    <span class="token comment" spellcheck="true">// MaxAge&lt;0 means delete cookie now, equivalently 'Max-Age: 0'</span>
+    <span class="token comment" spellcheck="true">// MaxAge>0 means Max-Age attribute present and given in seconds</span>
+    MaxAge   <span class="token builtin">int</span>
+    Secure   <span class="token builtin">bool</span>
+    HttpOnly <span class="token builtin">bool</span>
+    SameSite SameSite
+    Raw      <span class="token builtin">string</span>
+    Unparsed <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token comment" spellcheck="true">// Raw text of unparsed attribute-value pairs</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="cookiejar-Jar"><a href="#cookiejar-Jar" class="headerlink" title="cookiejar.Jar"></a><strong>cookiejar.Jar</strong></h4><p><code>net/http/cookiejar</code>包中<code>Jar</code>结构体提供了<code>http.CookieJar</code>的实现。</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// Jar implements the http.CookieJar interface from the net/http package.</span>
+<span class="token keyword">type</span> Jar <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    psList PublicSuffixList
+
+    <span class="token comment" spellcheck="true">// mu locks the remaining fields.</span>
+    mu sync<span class="token punctuation">.</span>Mutex
+
+    <span class="token comment" spellcheck="true">// entries is a set of entries, keyed by their eTLD+1 and subkeyed by</span>
+    <span class="token comment" spellcheck="true">// their name/domain/path.</span>
+    entries <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>entry
+
+    <span class="token comment" spellcheck="true">// nextSeqNum is the next sequence number assigned to a new cookie</span>
+    <span class="token comment" spellcheck="true">// created SetCookies.</span>
+    nextSeqNum <span class="token builtin">uint64</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong><code>http.Client</code>如何处理<code>Cookie</code>？</strong></p>
+<ul>
+<li><p>实例化<code>http.Client</code>时，</p>
+<ul>
+<li><p>若没有传入<code>CookieJar</code>，即<code>Jar==nil</code>，那么发送的<code>HTTP Request</code>不会携带<code>Cookie</code>。</p>
+</li>
+<li><p>若传入了<code>CookieJar</code>:</p>
+<ul>
+<li><p>在发送<code>HTTP Request</code>时，会调用<code>CookieJar</code>的<code>Cookies()</code>方法去查询是否有<code>Cookie</code>，查询到则添加到<code>HTTP Request</code>中。</p>
+</li>
+<li><p>在接收到<code>HTTP Response</code>时，会调用<code>CookieJar</code>的<code>SetCookies()</code>方法将返回消息的<code>Set-Cookie</code>头部的<code>Cookie</code>存储到<code>CookieJar</code>中。</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Client<span class="token punctuation">)</span> <span class="token function">send</span><span class="token punctuation">(</span>req <span class="token operator">*</span>Request<span class="token punctuation">,</span> deadline time<span class="token punctuation">.</span>Time<span class="token punctuation">)</span> <span class="token punctuation">(</span>resp <span class="token operator">*</span>Response<span class="token punctuation">,</span> didTimeout <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> c<span class="token punctuation">.</span>Jar <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> cookie <span class="token operator">:=</span> <span class="token keyword">range</span> c<span class="token punctuation">.</span>Jar<span class="token punctuation">.</span><span class="token function">Cookies</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>URL<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//从CookieJar中查询cookie。</span>
+          req<span class="token punctuation">.</span><span class="token function">AddCookie</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//添加cookie到HTTP Request头部</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  resp<span class="token punctuation">,</span> didTimeout<span class="token punctuation">,</span> err <span class="token operator">=</span> <span class="token function">send</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> c<span class="token punctuation">.</span><span class="token function">transport</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> deadline<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> didTimeout<span class="token punctuation">,</span> err
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> c<span class="token punctuation">.</span>Jar <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> rc <span class="token operator">:=</span> resp<span class="token punctuation">.</span><span class="token function">Cookies</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">len</span><span class="token punctuation">(</span>rc<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//http.Response的Cookies()方法可以获取返回消息的Set-Cookie头部的值。</span>
+          c<span class="token punctuation">.</span>Jar<span class="token punctuation">.</span><span class="token function">SetCookies</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>URL<span class="token punctuation">,</span> rc<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//保存Cookie到CookieJar</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> resp<span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -891,7 +982,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">a4ua</a>
+                    <a href="/about" rel="external nofollow noreferrer">a4uaI</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -901,7 +992,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/10/13/Go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/">http://a4ua.github.io/2020/10/13/Go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/</a>
+                    <a href="http://a4ua.github.io/2020/10/30/Go-Package%E2%80%94net-http-Part1-Client/">http://a4ua.github.io/2020/10/30/Go-Package%E2%80%94net-http-Part1-Client/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -914,7 +1005,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">a4ua</a>
+                    <a href="/about" target="_blank">a4uaI</a>
                     !
                 </span>
             </div>
@@ -939,8 +1030,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                                    <span class="chip bg-color">Go基础知识</span>
+                                <a href="/tagsio/net-http/">
+                                    <span class="chip bg-color">net\http</span>
+                                </a>
+                            
+                                <a href="/tagsio/http-Client/">
+                                    <span class="chip bg-color">http Client</span>
                                 </a>
                             
                         </div>
@@ -1242,66 +1337,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/14/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%87%BD%E6%95%B0/">
+                <a href="/2020/10/30/Go-Package%E2%80%94net-http-Part1-Client/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang学习之路—函数">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Go Package—net\http(Part I：Client)">
                         
-                        <span class="card-title">Golang学习之路—函数</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-14
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Golang/" class="post-category">
-                                    Golang
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                        <span class="chip bg-color">Go基础知识</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/10/13/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E6%8E%A5%E5%8F%A3/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Golang学习之路—接口">
-                        
-                        <span class="card-title">Golang学习之路—接口</span>
+                        <span class="card-title">Go Package—net\http(Part I：Client)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1312,7 +1359,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-30
                             </span>
                         <span class="publish-author">
                             
@@ -1326,11 +1373,65 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                        <span class="chip bg-color">Go基础知识</span>
+                    <a href="/tagsio/net-http/">
+                        <span class="chip bg-color">net\http</span>
+                    </a>
+                    
+                    <a href="/tagsio/http-Client/">
+                        <span class="chip bg-color">http Client</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/30/Linux%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E2%80%94sudo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Linux权限提升—sudo">
+                        
+                        <span class="card-title">Linux权限提升—sudo</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Penetration-Testing/" class="post-category">
+                                    Penetration Testing
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tagsio/Privilege-Escalation/">
+                        <span class="chip bg-color">Privilege Escalation</span>
                     </a>
                     
                 </div>
