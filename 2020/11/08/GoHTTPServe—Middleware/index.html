@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang学习之路—Context, a4ua">
+    <meta name="keywords" content="GoHTTPServe—Middleware, a4ua">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang学习之路—Context | a4ua</title>
+    <title>GoHTTPServe—Middleware | a4ua</title>
     <link rel="icon" type="image/jpeg" href="/medias/tx.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -606,12 +606,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang学习之路—Context</h1>
+                    <h1 class="description center-align post-title">GoHTTPServe—Middleware</h1>
                 </div>
             </div>
         </div>
@@ -728,8 +728,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                                <span class="chip bg-color">Go基础知识</span>
+                            <a href="/tagsio/Middldware/">
+                                <span class="chip bg-color">Middldware</span>
                             </a>
                         
                     </div>
@@ -753,28 +753,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-20
+                    2020-11-08
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-10-20
+                    2020-11-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    892
+                    705
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 
@@ -789,145 +789,112 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、Context"><a href="#一、Context" class="headerlink" title="一、Context"></a>一、Context</h2><blockquote>
-<p><code>Context</code>主要用来让上层<code>goroutine</code>能够随时主动结束其子<code>goroutine</code>。</p>
-</blockquote>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Context <span class="token keyword">interface</span> <span class="token punctuation">{</span>
-    <span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>deadline time<span class="token punctuation">.</span>Time<span class="token punctuation">,</span> ok <span class="token builtin">bool</span><span class="token punctuation">)</span>
-    <span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
-    <span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span>
-    <span class="token function">Value</span><span class="token punctuation">(</span>key <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+                <h2 id="一、中间件（Middleware）"><a href="#一、中间件（Middleware）" class="headerlink" title="一、中间件（Middleware）"></a>一、中间件（Middleware）</h2><p>中间件在调用<code>Handler</code>处理请求之前被执行，通常用于在处理请求前执行某些特定功能的代码，例如<code>Header</code>操纵、日志记录、权限认证和<code>ResponseWriter</code>劫持等等。</p>
+<p>中间件（<code>Middleware</code>）的原理是装饰器模式，即将<code>Handler</code>传入装饰器中进行封装，然后返回新的<code>Handler</code>。</p>
+<img src="/2020/11/08/GoHTTPServe%E2%80%94Middleware/bV3mey" alt="img" style="zoom:50%;">
+
+<p>通常每个中间件只处理一件事情，完成后将其传递给另一个中间件或最终处理程序。</p>
+<p><strong>先注册的装饰器最后被执行。</strong></p>
+<h2 id="二、gorilla-mux中间件实现原理"><a href="#二、gorilla-mux中间件实现原理" class="headerlink" title="二、gorilla\mux中间件实现原理"></a>二、<code>gorilla\mux</code>中间件实现原理</h2><pre class=" language-go"><code class="language-go"><span class="token keyword">type</span> Router <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+
+    <span class="token comment" spellcheck="true">// Slice of middlewares to be called after a match is found</span>
+    middlewares <span class="token punctuation">[</span><span class="token punctuation">]</span>middleware
+
+    <span class="token operator">...</span><span class="token operator">...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// middleware interface is anything which implements a MiddlewareFunc named Middleware.</span>
+<span class="token keyword">type</span> middleware <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">Middleware</span><span class="token punctuation">(</span>handler http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>Router<span class="token punctuation">)</span> <span class="token function">Use</span><span class="token punctuation">(</span>mwf <span class="token operator">...</span>MiddlewareFunc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> fn <span class="token operator">:=</span> <span class="token keyword">range</span> mwf <span class="token punctuation">{</span>
+        r<span class="token punctuation">.</span>middlewares <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>middlewares<span class="token punctuation">,</span> fn<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> MiddlewareFunc <span class="token keyword">func</span><span class="token punctuation">(</span>http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler
+
+<span class="token comment" spellcheck="true">// Middleware allows MiddlewareFunc to implement the middleware interface.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>mw MiddlewareFunc<span class="token punctuation">)</span> <span class="token function">Middleware</span><span class="token punctuation">(</span>handler http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">mw</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//调用自身</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
 <ul>
-<li><code>Done()</code>方法会返回一个channel，子<code>goroutine</code>通过监听返回的channel是否有数据来判断父<code>goroutine</code>让其取消执行与否。</li>
-<li><code>Err()</code>方法在子<code>goroutine</code>被取消执行时可以调用，会返回<code>goroutine</code>被取消执行的原因。<ul>
-<li>当主动调用取消<code>Context</code>的函数时，返回：<code>context canceled</code>。</li>
-<li>当计时器超时结束<code>Context</code>时，返回：<code>context deadline exceeded</code>。</li>
+<li><code>mux.Router</code>中定义了<code>middlewares</code>切片用于存储中间件，中间件接口要求实现<code>Middleware(handler http.Handler) http.Handler</code>方法，该方法是中间件的核心，实现对传入的原<code>Handler</code>进行封装，返回新的<code>Handler</code>。</li>
+<li><code>mux.Router</code>的<code>Use()</code>方法用于添加要使用的中间件，传入的参数类型为<code>MiddlewareFunc</code>，其实现了中间件接口。其实现接口的<code>Middleware()</code>实质上是调用的<code>MiddlewareFunc</code>自身。</li>
 </ul>
-</li>
-<li><code>Deadline()</code>方法返回子<code>goroutine</code>被取消执行的具体时间，用于设置了<code>deadline</code>时(见<code>WithDeadline()</code>)，否则<code>ok==false</code>。</li>
-</ul>
-<h2 id="二、根Context"><a href="#二、根Context" class="headerlink" title="二、根Context"></a>二、根Context</h2><blockquote>
-<p>Context是一个树形结构，最顶层的Context，也可以叫做根Context，Go已经在context包中为我们实现。</p>
-<p>可以通过调用<code>context.Background()</code>和<code>context.Todo()</code>获得根Context，根Context never canceled, has no values, and has no deadline.。</p>
-</blockquote>
-<p>根Context实质是使用一个私有结构体<code>emptyCtx</code>，其实现了<code>Context</code>接口。</p>
-<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// An emptyCtx is never canceled, has no values, and has no deadline. It is not</span>
-<span class="token comment" spellcheck="true">// struct{}, since vars of this type must have distinct addresses.</span>
-<span class="token keyword">type</span> emptyCtx <span class="token builtin">int</span>
-
-<span class="token keyword">func</span> <span class="token punctuation">(</span><span class="token operator">*</span>emptyCtx<span class="token punctuation">)</span> <span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>deadline time<span class="token punctuation">.</span>Time<span class="token punctuation">,</span> ok <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token punctuation">(</span><span class="token operator">*</span>emptyCtx<span class="token punctuation">)</span> <span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token boolean">nil</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token punctuation">(</span><span class="token operator">*</span>emptyCtx<span class="token punctuation">)</span> <span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token boolean">nil</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token punctuation">(</span><span class="token operator">*</span>emptyCtx<span class="token punctuation">)</span> <span class="token function">Value</span><span class="token punctuation">(</span>key <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token boolean">nil</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">var</span> <span class="token punctuation">(</span>
-    background <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>emptyCtx<span class="token punctuation">)</span>
-    todo       <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>emptyCtx<span class="token punctuation">)</span>
-<span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">// Background returns a non-nil, empty Context. It is never canceled, has no</span>
-<span class="token comment" spellcheck="true">// values, and has no deadline. It is typically used by the main function,</span>
-<span class="token comment" spellcheck="true">// initialization, and tests, and as the top-level Context for incoming</span>
-<span class="token comment" spellcheck="true">// requests.</span>
-<span class="token keyword">func</span> <span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Context <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> background
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// TODO returns a non-nil, empty Context. Code should use context.TODO when</span>
-<span class="token comment" spellcheck="true">// it's unclear which Context to use or it is not yet available (because the</span>
-<span class="token comment" spellcheck="true">// surrounding function has not yet been extended to accept a Context</span>
-<span class="token comment" spellcheck="true">// parameter).</span>
-<span class="token keyword">func</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Context <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> todo
-<span class="token punctuation">}</span></code></pre>
+<h5 id="执行流程解析"><a href="#执行流程解析" class="headerlink" title="执行流程解析"></a><strong>执行流程解析</strong></h5><p>首先，我们知道，所有的请求一开始均由分发器（<code>mux.Router</code>）的<code>ServerHTTP()</code>来进行请求分发，在方法中调用了<code>Match()</code>方法进行路由查找。</p>
 <ul>
-<li><p><strong>注意</strong></p>
-<blockquote>
-<p>单纯的根Context实际是没有用的，并不能取消子<code>goroutine</code>的执行，可以认为其只是做为Context树中的根节点而已。真正实现取消执行等功能的Context参考下一节。</p>
-<p>根节点通常使用<code>Background()</code>，通常实在<code>main goroutine</code>中被创建。</p>
-</blockquote>
+<li><p><code>*mux.Router.ServeHTTP()</code></p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>Router<span class="token punctuation">)</span> <span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> req <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+    <span class="token keyword">var</span> match RouteMatch
+    <span class="token keyword">var</span> handler http<span class="token punctuation">.</span>Handler
+    <span class="token keyword">if</span> r<span class="token punctuation">.</span><span class="token function">Match</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> <span class="token operator">&amp;</span>match<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        handler <span class="token operator">=</span> match<span class="token punctuation">.</span>Handler
+        req <span class="token operator">=</span> <span class="token function">requestWithVars</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> match<span class="token punctuation">.</span>Vars<span class="token punctuation">)</span>
+        req <span class="token operator">=</span> <span class="token function">requestWithRoute</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> match<span class="token punctuation">.</span>Route<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token operator">...</span><span class="token operator">...</span>
+    handler<span class="token punctuation">.</span><span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> req<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
 </li>
 </ul>
-<h2 id="三、With系列函数"><a href="#三、With系列函数" class="headerlink" title="三、With系列函数"></a>三、With系列函数</h2><blockquote>
-<p>Go除了提供根Context外，还提供了<code>WithCancel()</code>、<code>WithDeadline()</code>、<code>WithTimeout()</code>三个函数，这三个函数通过对父Context进行封装，可以实现带取消功能的Context。</p>
-</blockquote>
+<p><code>*Route.Match()</code>会遍历所有的路由（<code>Route</code>），并调用<code>Route.Match()</code>逐一进行匹配查找。如果存在匹配项，就会遍历所有中间件对查找到的原<code>Handler</code>进行封装。</p>
 <ul>
-<li><p><code>func WithCancel(parent Context) (ctx Context, cancel CancelFunc)</code></p>
-<ul>
-<li><p>对父Context进行封装，返回子Context以及可以用来取消该子Context的<code>cancel</code>函数。</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ch <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
-
-    ctx1 <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span>             <span class="token comment" spellcheck="true">//根Context</span>
-    ctx2<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>ctx1<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//封装根Context，返回带取消功能的子Context。</span>
-
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">{</span>
-            <span class="token keyword">select</span> <span class="token punctuation">{</span>
-            <span class="token keyword">case</span> <span class="token operator">&lt;-</span>ctx2<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">//监听父goroutine是否让其取消执行。</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ctx2<span class="token punctuation">.</span><span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      <span class="token comment" spellcheck="true">//打印被取消执行的原因。context canceled</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ctx2<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//不适用于主动调用取消Context的情况。0001-01-01 00:00:00 +0000 UTC false</span>
-                ch <span class="token operator">&lt;-</span> <span class="token number">0</span>
-                <span class="token keyword">return</span>
-            <span class="token keyword">case</span> <span class="token operator">&lt;-</span>time<span class="token punctuation">.</span><span class="token function">After</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Still exec"</span><span class="token punctuation">)</span>
+<li><p><code>*mux.Router.Match()</code></p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>Router<span class="token punctuation">)</span> <span class="token function">Match</span><span class="token punctuation">(</span>req <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">,</span> match <span class="token operator">*</span>RouteMatch<span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> route <span class="token operator">:=</span> <span class="token keyword">range</span> r<span class="token punctuation">.</span>routes <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> route<span class="token punctuation">.</span><span class="token function">Match</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> match<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Build middleware chain if no error was found</span>
+            <span class="token keyword">if</span> match<span class="token punctuation">.</span>MatchErr <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+                <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>middlewares<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">{</span>
+                    match<span class="token punctuation">.</span>Handler <span class="token operator">=</span> r<span class="token punctuation">.</span>middlewares<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Middleware</span><span class="token punctuation">(</span>match<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//遍历中间件对匹配项的原Handler进行逐层封装</span>
+                <span class="token punctuation">}</span>
             <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span>
         <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
 
-    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">)</span>
-    <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//主动取消Context。让子goroutine取消执行</span>
-    <span class="token boolean">_</span> <span class="token operator">=</span> <span class="token operator">&lt;-</span>ch
+    <span class="token operator">...</span><span class="token operator">...</span>
 <span class="token punctuation">}</span></code></pre>
 </li>
 </ul>
-</li>
-<li><p><code>func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)</code></p>
-<ul>
-<li><p>对父Context进行封装并传入一个计时器，返回一个子Context，该子Context除了可以用<code>cancel</code>函数来主动取消Context外，当计时器超时时，Context也会被取消。</p>
-<pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ch <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
-    ctx1 <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    ctx2<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithTimeout</span><span class="token punctuation">(</span>ctx1<span class="token punctuation">,</span> time<span class="token punctuation">.</span>Second<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//2s过后，会取消Context。</span>
+<h5 id="例子：日志记录中间件"><a href="#例子：日志记录中间件" class="headerlink" title="例子：日志记录中间件"></a><strong>例子：日志记录中间件</strong></h5><pre class=" language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">hello</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    name <span class="token operator">:=</span> mux<span class="token punctuation">.</span><span class="token function">Vars</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Fprintf</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> <span class="token string">"Hello %s"</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">{</span>
-            <span class="token keyword">select</span> <span class="token punctuation">{</span>
-            <span class="token keyword">case</span> <span class="token operator">&lt;-</span>ctx2<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ctx2<span class="token punctuation">.</span><span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      <span class="token comment" spellcheck="true">//context deadline exceeded</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ctx2<span class="token punctuation">.</span><span class="token function">Deadline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//返回Context被取消的时间。2020-10-20 16:58:38.7874815 +0800 CST m=+2.004461501 true</span>
-                ch <span class="token operator">&lt;-</span> <span class="token number">0</span>
-                <span class="token keyword">return</span>
-            <span class="token keyword">case</span> <span class="token operator">&lt;-</span>time<span class="token punctuation">.</span><span class="token function">After</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Millisecond <span class="token operator">*</span> <span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Still exec"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">func</span> <span class="token function">logger</span><span class="token punctuation">(</span>next http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler <span class="token punctuation">{</span>
 
-    <span class="token boolean">_</span> <span class="token operator">=</span> <span class="token operator">&lt;-</span>ch
+    <span class="token comment" spellcheck="true">//中间件要返回一个新的Handler，在新的Handler中的最后调用原Handler，实现在原先的处理逻辑中添加新功能。</span>
+    h <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//本中间件实现记录请求URL和客户端IP：PORT的功能</span>
+        log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>URL<span class="token punctuation">.</span>Path<span class="token punctuation">,</span> r<span class="token punctuation">.</span>RemoteAddr<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">//调用原Handler或是下一个中间件。</span>
+        next<span class="token punctuation">.</span><span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> r<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> http<span class="token punctuation">.</span><span class="token function">HandlerFunc</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    router <span class="token operator">:=</span> mux<span class="token punctuation">.</span><span class="token function">NewRouter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    router<span class="token punctuation">.</span><span class="token function">HandleFunc</span><span class="token punctuation">(</span><span class="token string">"/hello/{name}"</span><span class="token punctuation">,</span> hello<span class="token punctuation">)</span>
+    router<span class="token punctuation">.</span><span class="token function">Use</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+
+    http<span class="token punctuation">.</span><span class="token function">ListenAndServe</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> router<span class="token punctuation">)</span>
+
 <span class="token punctuation">}</span></code></pre>
-</li>
-</ul>
-</li>
-<li><p><code>func WithDeadline(parent Context, d time.Time) (Context, CancelFunc)</code></p>
-<ul>
-<li>对父Context进行封装并传入一个<code>deadline</code>时间，返回一个子Context，该子Context除了可以用<code>cancel</code>函数来主动取消Context外，当到<code>deadline</code>时间时，Context也会被取消。</li>
-<li>相当于计划任务。</li>
-</ul>
-</li>
-</ul>
 
             </div>
             <hr/>
@@ -953,7 +920,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://a4ua.github.io/2020/10/20/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94Context/">http://a4ua.github.io/2020/10/20/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94Context/</a>
+                    <a href="http://a4ua.github.io/2020/11/08/GoHTTPServe%E2%80%94Middleware/">http://a4ua.github.io/2020/11/08/GoHTTPServe%E2%80%94Middleware/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -991,8 +958,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                                    <span class="chip bg-color">Go基础知识</span>
+                                <a href="/tagsio/Middldware/">
+                                    <span class="chip bg-color">Middldware</span>
                                 </a>
                             
                         </div>
@@ -1294,17 +1261,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/26/Vulnhub%E2%80%94Maskcrafter/">
+                <a href="/2020/11/08/GoHTTPServe%E2%80%94Middleware/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Vulnhub—Maskcrafter">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="GoHTTPServe—Middleware">
                         
-                        <span class="card-title">Vulnhub—Maskcrafter</span>
+                        <span class="card-title">GoHTTPServe—Middleware</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1314,26 +1282,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/Vulnhub/">
-                        <span class="chip bg-color">Vulnhub</span>
+                    <a href="/tagsio/Middldware/">
+                        <span class="chip bg-color">Middldware</span>
                     </a>
                     
                 </div>
@@ -1347,13 +1316,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/16/Golang%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E2%80%94%E5%B9%B6%E5%8F%91/">
+                <a href="/2020/11/08/GoHTTPServe%E2%80%94gorilla-mux/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Golang学习之路—并发">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="GoHTTPServe—gorilla_mux">
                         
-                        <span class="card-title">Golang学习之路—并发</span>
+                        <span class="card-title">GoHTTPServe—gorilla_mux</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1364,7 +1333,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-08
                             </span>
                         <span class="publish-author">
                             
@@ -1381,8 +1350,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tagsio/Go%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-                        <span class="chip bg-color">Go基础知识</span>
+                    <a href="/tagsio/gorilla-mux/">
+                        <span class="chip bg-color">gorilla\mux</span>
                     </a>
                     
                 </div>
